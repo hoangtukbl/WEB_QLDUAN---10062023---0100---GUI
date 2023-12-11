@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Đăng nhập hệ thống quản lý tiến độ dự án";
+    @model WEB_QLDUAN.Models.Login
+}
+
+<link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+
+<style>
+    #UserID:focus, #Password:focus {
+        outline: none !important;
+        border-color: #68a2c3 !important;
+        box-shadow: 0 0 6px #719ECE;
+        font-weight: bold;
+        color: dodgerblue;
+    }
+
+    #btnLogin:focus, #btnLogin:hover {
+        outline: none !important;
+        border-color: white !important;
+        box-shadow: 0 0 6px #719ECE;
+        font-weight: bold;
+    }
+</style>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="" style="color:darkblue">Project<b>Management</b></a>
+        </div>
+        <div class="login-box-body" style="font-size:14px;">
+            <p class="login-box-msg" style="">Solutions to help you manage the progress of your projects effectively!</p>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmLoginForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group has-feedback" style="font-weight:bold;">
+                    @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", @name = "UserID", @id = "UserID", @placeholder = "User ID", @type = "text" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="font-weight:bold;">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @name = "Password", @id = "Password", @placeholder = "Password", @type = "password", @style = "margin-top:5px;" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button id="btnLogin" type="button" class="btn btn-primary btn-block btn-flat">
+                            Login
+                            <i id="LoginLoading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+            <p style="">Don't you have an account? <a href="/Home/SignUp/" style="color:#1877f2;">Register</a></p>
+        </div>
+    </div>
+</body>
+
+@if (ViewData["CHANGEPASS"] != null && ViewData["CHANGEPASS"].ToString().Trim() != "")
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert('@Html.Raw(@ViewData["CHANGEPASS"])');
+            };
+    </script>
+}
+
+<script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#UserID').focus();
+        $('#UserID').val('nv001');
+        $('#Password').val('123');
+
+        $('#Password').on('keypress', function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                event.preventDefault();
+                $('#btnLogin').focus();
+            }
+            else {
+            }
+        });
+
+        $('#UserID').on('keypress', function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                event.preventDefault();
+                $('#Password').focus();
+            }
+            else {
+            }
+        });
+        $('#btnLogin').off('click').on('click', function () {
+            this.disabled = true;
+            $("#LoginLoading").show();
+
+            if ($('#UserID').val().trim() == null || $('#UserID').val().trim() == "") {
+                alert("Bạn vui lòng nhập ID đăng nhập!");
+                $("#LoginLoading").hide();
+                $('#UserID').focus();
+                this.disabled = false;
+            }
+            else if ($('#Password').val().trim() == null || $('#Password').val().trim() == "") {
+                alert("Bạn vui lòng nhập mật khẩu!");
+                $("#LoginLoading").hide();
+                $('#Password').focus();
+                this.disabled = false;
+            }
+            else {
+                var form = $('#frmLoginForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var uri = "/Home/Login";
+                var id = $('#UserID').val().trim();
+                var pass = $('#Password').val().trim();
+
+                $.ajax({
+                    url: uri,
+                    data: {
+                        __RequestVerificationToken: token,
+                        USERID: id,
+                        PASSWORD: pass
+                    },
+                    type: "POST",
+
+                    // contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        $("#LoginLoading").hide();
+
+                        if (response.STATUS == "true") {
+                            document.getElementById('btnLogin').disabled = false;
+                            location.href = "/Home/Project/";
+                        }
+                        else if (response.STATUS == "false") {
+                            alert(response.MESSAGE);
+                            document.getElementById('btnLogin').disabled = false;
+                        }
+                        else {
+                            alert("Có lỗi trong quá trình đăng nhập. Vui lòng kiểm tra lại!");
+                            document.getElementById('btnLogin').disabled = false;
+                        }
+                    },
+                    error: function (response) {
+                        alert("Có lỗi trong quá trình đăng nhập. Vui lòng kiểm tra lại!");
+                        $("#LoginLoading").hide();
+                        document.getElementById('btnLogin').disabled = false;
+                    }
+                });
+            }
+        });
+    });
+</script>

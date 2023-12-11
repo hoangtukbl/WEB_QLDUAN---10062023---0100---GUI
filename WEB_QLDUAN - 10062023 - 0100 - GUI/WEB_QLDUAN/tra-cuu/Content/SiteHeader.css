@@ -1,0 +1,71 @@
+﻿
+#bs-navbar > .navbar-nav li {
+    margin-right: 10px; /*25px*/
+}
+
+.navbar-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.navbar-brand {
+    float: left;
+    height: 38px;
+    padding: 3px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.iconVN {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+}
+
+.label-myCompany {
+    display: none;
+    text-align: center;
+    color: #0c7cc5;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.ts-scrollToTop {
+    background: #fff;
+    border: 1px solid #56dd4c;
+    box-shadow: 0 0 8px 2px #a9e2ba;
+    border-radius: 50%;
+    bottom: 20px;
+    display: none;
+    height: 50px;
+    overflow: hidden;
+    position: fixed;
+    right: 20px;
+    width: 50px;
+}
+
+    .ts-scrollToTop span {
+        bottom: 0;
+        color: #0f8b0e;
+        font-size: 1.8em;
+        height: 28px;
+        left: 0;
+        margin: auto;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 25px;
+    }

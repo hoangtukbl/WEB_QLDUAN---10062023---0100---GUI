@@ -1,0 +1,116 @@
+﻿
+<aside class="main-sidebar">
+    <section class="sidebar" style="margin-top:38px;">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Content/adminlte/dist/img/customers_icon_01.PNG" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>#@Session["Login"]</p>
+                <a href="#"><i class="fa fa-circle text-success" style="color: #92fb92"></i> Online</a>
+            </div>
+        </div>
+
+        <div class="sidebar-form" style="margin: 0px;">
+            <div class="box box-solid collapsed-box" style="font-size: 12px; color:white;text-align:justify;margin-bottom:0px">
+                <div class="box-header" style=" color: white; background-color: #3c8dbc;">
+                    <div class="header">Your information</div>
+                    <div class="box-tools" style="top:1px;">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" style="width:30px;background-color:#3c8dbc">
+                            <i class="fa fa-plus" style="color:white;"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding" style="background-color: #222d32;">
+                    <div class="col-md-12" style="margin-top:10px;">
+                        <div class="form-group">
+                            <i class="fa fa-user" style="padding-right:5px;"></i>
+                            <span>@ViewBag._fullname.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <i class="fa fa-address-book" style="padding-right: 5px;"></i>
+                            <span>@ViewBag._sex - @ViewBag._birthday.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <i class="fa fa-map-marker" style="padding-right: 5px;"></i>
+                            <span>@ViewBag._address.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu" data-widget="tree" style="margin-top:5px">
+            <li class="header" style="color: white; background-color: #3c8dbc;">Main function</li>
+            @if (Session["Role"] != null && Session["Role"].ToString().Trim() == "Admin")
+            {
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Project/'">
+                        <i class="fa fa-dashboard"></i><span> Projects</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/UserList/'">
+                        <i class="fa fa-th-list"></i><span> Users</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Note/'">
+                        <i class="fa fa-list"></i><span> Notes</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Project/'">
+                        <i class="fa fa-dashboard"></i><span> Projects</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Task/'">
+                        <i class="fa fa-list-ol"></i><span> Tasks</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Worklog/'">
+                        <i class="fa fa-file-text"></i><span> Worklog</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Note/'">
+                        <i class="fa fa-list"></i><span> Notes</span>
+                    </a>
+                </li>
+            }
+
+            <li class="">
+                <a href="javascript:void(0);" onclick="location.href='/Home/UserProfile/'">
+                    <i class="fa fa-user-circle"></i><span> About me</span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="javascript:void(0);" onclick="location.href='/Home/ChangePass/'">
+                    <i class=" fa fa-refresh"></i><span> Change Password</span>
+                </a>
+            </li>
+
+            <li style="">
+                <a href="javascript:void(0);" onclick="location.href='/Home/Logout/'">
+                    <i class="fa fa-power-off" style="color:orange;"></i><span style="color:orange;"> Log out</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+</aside>
+<script src="~/tra-cuu/Scripts/SiteSidebar.js"></script>
+<script>
+
+</script>

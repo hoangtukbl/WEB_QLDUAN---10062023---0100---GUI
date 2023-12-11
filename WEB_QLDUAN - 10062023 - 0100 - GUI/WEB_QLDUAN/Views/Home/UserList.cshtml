@@ -1,0 +1,843 @@
+﻿@{
+    ViewBag.Title = "Quản lý dự án";
+    Layout = "~/Views/Shared/_Site.cshtml";
+    @model IEnumerable<WEB_QLDUAN.Models.User>
+}
+
+@section Styles{
+
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/adminlte/components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.css">
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+        .myborderError {
+            border: solid 1px red !important;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome */
+            color: green;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-webkit-input-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        :-ms-input-placeholder { /* IE 10+ */
+            color: red;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-ms-input-placeholder {
+            opacity: 0.5;
+            font-size: 9px;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: #ccc;
+            opacity: 0.3;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-moz-placeholder {
+            opacity: 0.5;
+        }
+
+        :-moz-placeholder { /* Firefox 4 - 18 */
+            color: red;
+            opacity: 1;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-moz-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        .modalLoading {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 82%;
+            top: 0;
+            /*background-color: Black;
+                    filter: alpha(opacity=30);
+                    opacity: 0.2;*/
+            -moz-opacity: 0.8;
+        }
+
+        .centerLoading {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 8px;
+            width: 60px;
+            background-color: #d3cccc;
+            border-radius: 5px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+            text-align: center;
+            color: orangered;
+            opacity: 0.8;
+        }
+
+            .centerLoading img {
+                text-align: center;
+            }
+
+        .nav-list li.active > a:after {
+            border-right-color: #000000;
+        }
+
+        .breadcrumb > li + li:before {
+            display: none;
+        }
+
+        .btn-cauhoi {
+            background-color: #c2fbd7;
+            border-radius: 100px;
+            box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+            color: green;
+            cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 250ms;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .btn-cauhoi:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+
+        .table-header {
+            background-color: #438eb9 !important;
+        }
+
+        #btn-scroll-up {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: transparent !important;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+            #btn-scroll-up :hover {
+                background-color: #555;
+            }
+
+        #dtCauHoiThemMoi_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiThemMoi_wrapper .row:last-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:last-child {
+            display: none;
+        }
+
+        .validation-summary-errors {
+            font-size: 14px;
+            /*margin-top: 15px;*/
+            color: red;
+        }
+
+        .glyphicon.fast-right-spinner {
+            -webkit-animation: glyphicon-spin-r 1s infinite linear;
+            animation: glyphicon-spin-r 1s infinite linear;
+        }
+
+        .sidebar::before {
+            background: #585858 !important;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #576373;
+            border-color: #c5d0dc;
+            border-top: 2px solid #4c8fbd;
+            border-bottom-color: transparent;
+            background-color: #FFF;
+            z-index: 12;
+            line-height: 16px;
+            margin-top: -1px;
+            box-shadow: 0 -2px 3px 0 rgba(0,0,0,0.15);
+        }
+
+        .green {
+            color: #69aa46 !important;
+        }
+
+        .table-header {
+            background-color: #307ecc;
+            color: #FFF;
+            font-size: 14px;
+            line-height: 38px;
+            padding-left: 12px;
+            margin-bottom: 5px;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            float: none;
+        }
+
+        .dataTables_length > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_filter > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_info {
+            font-size: 13px;
+        }
+
+        .select2 {
+            font-weight: bold;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="">
+    <section class="content-header">
+        <h3 class="" style="color: #dd4b39; margin-top:5px; margin-bottom:3px; display:none;">
+            User list
+            <small>#@Session["Login"]</small>
+            <i id="TongHop_Loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+            <span id="isMobile"></span>
+        </h3>
+        <ol class="breadcrumb">
+            <li>
+                <a href="javascript:void(0);" onclick="location.href='/Home/Index/'">
+                    <i class=" fa fa-dashboard"></i> Home >
+                </a>
+            </li>
+            <li class="active">User list</li>
+        </ol>
+    </section>
+
+    <section class="content" style="margin-top:20px;">
+        <div class="row" id="summary">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-blue"><i class="ion ion-ios-people-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Users</span>
+                        <span class="info-box-number" id="tsnhansu">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="ion ion-person-add"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Male</span>
+                        <span class="info-box-number" id="tsnam">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-user"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Female</span>
+                        <span class="info-box-number" id="tsnu">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Join project</span>
+                        <span class="info-box-number">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="rowAdd">
+            <div class="col-md-12">
+                <div id="divBody" class="box box-primary" style="border-top-width:2px;" @*style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;"*@>
+                    <div id="divTitle" class="box-header with-border" style="color:#0170f8">
+                        <i class="fa fa-plus"></i>
+                        <h4 class="box-title" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size:16px;"><span id="txtTitle">Add User</span></h4>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmInsertUser" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top:5px;">
+                                    <div class="col-md-4">
+                                        <label>User ID: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                        <input id="ID" style="text-transform:uppercase; font-weight:bold; color:orangered;" name="ID" class="form-control" placeholder="User ID" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Full name: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                        <input id="FullName" name="FullName" style="" class="form-control" placeholder="Full name" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Sex:</label>
+                                        <select id="Sex" name="Sex" style="" class="form-control" placeholder="Sex">
+                                            <option style="font-size:110%;" value="Nam">Nam</option>
+                                            <option style="font-size:110%;" value="Nữ">Nữ</option>
+                                            <option style="font-size:110%;" value="Không xác định">Không xác định</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top:5px;">
+                                    <div class="col-md-4">
+                                        <label>Date of birth: </label>
+                                        <input type="date" id="Birthday" style="" name="BirthDay" class="form-control" placeholder="dd/MM/yyyy" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Address</label>
+                                        <input id="Address" name="Address" style="" class="form-control" placeholder="Address" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Phone</label>
+                                        <input id="Phone" name="Phone" style="" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top:5px;">
+                                    <div class="col-md-4">
+                                        <label>Email</label>
+                                        <input id="Email" type="text" style="" name="Email" class="form-control" placeholder="Email" />
+                                    </div>
+                                    <div class="col-md-6" style="display:none;">
+                                        <label>Image:</label>
+                                        <div class="input-group">
+                                            <input id="ImageLink" type="file" name="ImageLink" class="form-control" placeholder="Avatar image" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-toolbar btn-flat">Reset</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Role: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                        <select id="lstRole" class="form-control select2" style="width: 100%;">
+                                            <option value="-1" selected="selected">-- Select role --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Password: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                        <input id="Password" name="Password" class="form-control" type="password" style="padding:0px;border-radius:0px;height:34px;border:solid 1px #d2d6de;padding-left:10px;" placeholder="Password" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:5px;">
+                                <label>Description: </label>
+                                <textarea id="Description" name="Description" style="" class="form-control" placeholder="Description"></textarea>
+                            </div>
+
+                        }
+                    </div>
+                    <div class="box-footer" id="divFooter">
+                        <div class="row pull-right" style="margin-right:5px;">
+                            <div class="col-md-12">
+                                <button id="btnSave" type="button" class="btn btn-primary">
+                                    Save
+                                    <i id="InsertUserLoading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+                                </button>
+                                <button id="btnReset" type="button" class="btn btn-default">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <div class="box box-success" style="border-top-width:2px;" @*style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;"*@>
+                    <div class="box-header with-border" style="color:green">
+                        <i class="fa fa-filter"></i>
+                        <h4 class="box-title" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size:16px;">Filter User</h4>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFilterUser" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <label>User ID:</label>
+                                        <input id="IDFilter" class="form-control" placeholder="User ID Filter" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Role:</label>
+                                        <select id="lstDepartmentFilter" class="form-control" style="width:100%;"></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Project ID:</label>
+                                        <select id="lstPositionFilter" class="form-control" style="width:100%;"></select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="box-footer">
+                        <div class="row pull-right" style="margin-right:5px;">
+                            <div class="col-md-12">
+                                <button id="btnFilterUser" type="button" class="btn btn-success">
+                                    Apply
+                                    <i id="FilterUserLoading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+                                </button>
+                                <button id="btnResetFilter" class="btn btn-default">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="UserResult">
+            <div class="row" id="rowUserTable" style="">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <i class="fa fa-list" style="color:darkorange"></i>
+                            <h3 class="box-title" style="color:darkorange; font-family:Tahoma; font-size:16px;">List Users</h3>
+                            <div class="box-tools pull-right" style="display:none;">
+                                <div class="btn-group" style="padding-top:0px;">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-wrench"></i> Show by <i class="fa fa-sort-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="javascript:void(0)" id="btnTableView">Table view</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="javascript:void(0)" id="btnItemView">Item view</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="tblUser" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="no-sort" style="min-width:80px; text-align:center">
+                                                <button id="btnAdd" class="btn btn-default" style="border-color:#337ab7; color:#337ab7;" onclick="fnInsertUser();"><i class="fa fa-plus-circle"></i> Add User</button>
+                                            </th>
+                                            <th style="max-width:48px;">No.</th>
+                                            <th class="col-md-2" style="color:darkorange;">User ID</th>
+                                            <th class="col-md-2">Full name</th>
+                                            <th class="col-md-2">Date of birth</th>
+                                            <th class="col-md-1">Sex</th>
+                                            <th class="col-md-4">Address</th>
+                                            <th class="col-md-1" style="color:steelblue;">Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            var stt = 0;
+                                            foreach (var p in Model)
+                                            {
+                                                stt += 1;
+                                                <tr>
+                                                    <td style="min-width:80px;">
+                                                        @*<button onclick="viewProfile(this);" class="btn btn-sm btn-default" value="@p.ID" title="View profile">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>*@
+                                                        <button name="btnEdit" onclick="fnUpdateUser('@p.ID');" class="btn btn-sm btn-primary" value="@p.ID" title="Update User">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button onclick="fnDeleteUser('@p.ID');" class="btn btn-sm btn-warning" value="@p.ID" title="Delete User">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>@stt</td>
+                                                    <td style="color:darkorange;">@p.ID</td>
+                                                    <td>@p.FullName</td>
+
+                                                    @if (p.Birthday != null && p.Birthday.HasValue)
+                                                    {
+                                                        <td>@p.Birthday.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@p.Sex</td>
+                                                    <td>@p.Address</td>
+                                                    @if (p.RoleID != null)
+                                                    {
+                                                        <td style="color:steelblue;">@p.Role.Name</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval");
+@section Scripts{
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="~/Content/adminlte/components/chart.js/Chart.js"></script>
+
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/tra-cuu/Scripts/Customer.js"></script>
+
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+        var flag_themsua = 0;
+
+        $(document).ready(function () {
+
+            flag_themsua = 0;
+            $('.select2').select2();
+            $('#tblUser').DataTable();
+            document.getElementById('ID').disabled = false;
+
+            $.ajax({
+                url: "/Home/LoadRoleListAjax/",
+                type: "POST",
+                dataType: "json",
+                success: function (response) {
+                    if (response != '') {
+                        for (i in response) {
+                            $("#lstRole").append("<option value='" + response[i].ID + "'>" + response[i].Name + "</option>");
+                        }
+                        $('#lstRole').val('-1').trigger('change');
+                    };
+                },
+            });
+
+            $('#btnSave').off('click').on('click', function () {
+                this.disabled = true;
+                $('#ID').removeClass('myborderError');
+                $('#FullName').removeClass('myborderError');
+                $('#Birthday').removeClass('myborderError');
+                $('#Sex').removeClass('myborderError');
+                $('#Address').removeClass('myborderError');
+                $('#Phone').removeClass('myborderError');
+                $('#Email').removeClass('myborderError');
+                $('#Password').removeClass('myborderError');
+                $('#Description').removeClass('myborderError');
+                $('#lstRole').removeClass('myborderError');
+                $('.select2-selection--single').removeClass('myborderError');
+
+                var form1 = $('#frmInsertUser');
+                var token1 = $('input[name="__RequestVerificationToken"]', form1).val();
+
+                var ID = $('#ID').val();
+                var FullName = $('#FullName').val();
+                var Birthday = $('#Birthday').val();
+                var Sex = $('#Sex').val();
+                var Address = $('#Address').val();
+                var Phone = $('#Phone').val();
+                var Email = $('#Email').val();
+                var Password = $('#Password').val();
+                var RoleID = $('#lstRole').val();
+                var Description = $('#Description').val();
+
+                if (flag_themsua == 0 && (ID == null || ID.trim() == "")) // Insert
+                {
+                    alert("Vui lòng nhập User ID!");
+                    $('#ID').addClass('myborderError');
+                    document.getElementById('btnSave').disabled = false;
+                    $('#ID').focus();
+                }
+                else if (flag_themsua == 1 && (ID == null || ID.trim() == "")) // Update
+                {
+                    alert("Không xác định được đối tượng cần sửa dữ liệu! Vui lòng refesh lại trang web.");
+                    $('#ID').addClass('myborderError');
+                    document.getElementById('btnSave').disabled = false;
+                }
+                else if (
+                    (FullName.trim() == "") || (Password.trim() == "") || (RoleID == null || RoleID.trim() == "")
+                ) {
+                    alert("Vui lòng điền đầy đủ thông tin với các trường dữ liệu được dánh dấu (*)");
+                    document.getElementById('btnSave').disabled = false;
+
+                    if (ID == null || ID.trim() == "") {
+                        $('#ID').addClass('myborderError');
+                    }
+                    if (FullName.trim() == "") {
+                        $('#FullName').addClass('myborderError');
+                    }
+                    if (Password.trim() == "") {
+                        $('#Password').addClass('myborderError');
+                    }
+                    if (RoleID == null || RoleID.trim() == "-1") {
+                        $('.select2-selection--single').addClass('myborderError');
+                    }
+                } else if (Email != null && Email != "" && CheckEmailFormat(Email) == false) {
+                    alert("Địa chỉ email không hợp lệ! Vui lòng kiểm tra lại.");
+                    document.getElementById('btnSave').disabled = false;
+
+                    $('#Email').focus();
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/UserUpdate/",
+                        data: {
+                            __RequestVerificationToken: token1,
+                            FLAG: flag_themsua,
+                            ID: ID,
+                            FullName: FullName,
+                            Birthday: Birthday,
+                            Sex: Sex,
+                            Address: Address,
+                            Phone: Phone,
+                            Email: Email,
+                            Password: Password,
+                            Description: Description,
+                            RoleID: RoleID
+                        },
+                        //contentType: "application/json; charset=utf-8",
+                        //dataType: "json",
+                        success: function (response) {
+                            if (response.STATUS == "true") {
+                                alert(response.MESSAGE);
+                                window.location.href = "/Home/UserList/";
+                            }
+                            else if (response.STATUS == "false") {
+                                alert(response.MESSAGE);
+                            }
+                            else {
+                                alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                            }
+
+                            //document.getElementById('btnSave').disabled = false;
+                        },
+                        error: function (xhr, status, error) {
+                            var err = xhr.responseText;
+                            alert(err);
+                        }
+                        //error: function (response) {
+                        //    alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                        //    document.getElementById('btnInsertProject').disabled = false;
+                        //}
+                    });
+                };
+            });
+
+            $('#btnReset').off('click').on('click', function () {
+                window.location.href = "/Home/UserList/";
+            });
+
+            $('#tblUser tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    $('#tblUser tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+        });
+
+        function fnInsertUser() {
+            flag_themsua = 0; // Insert
+            window.location.href = "#summary";
+            $('#txtTitle').html("Add User");
+            document.getElementById('ID').disabled = false;
+
+            document.getElementById('divTitle').style.color = "#0170f8";
+            document.getElementById('divBody').style.backgroundColor = "white";
+            document.getElementById('divFooter').style.backgroundColor = "white";
+            document.getElementById('btnSave').style.backgroundColor = "#3c8dbc";
+            document.getElementById('btnSave').style.borderColor = "#367fa9";
+
+            $('#ID').removeClass('myborderError');
+            $('#FullName').removeClass('myborderError');
+            $('#Birthday').removeClass('myborderError');
+            $('#Sex').removeClass('myborderError');
+            $('#Address').removeClass('myborderError');
+            $('#Phone').removeClass('myborderError');
+            $('#Email').removeClass('myborderError');
+            $('#Password').removeClass('myborderError');
+            $('#Description').removeClass('myborderError');
+            $('#lstRole').removeClass('myborderError');
+            $('.select2-selection--single').removeClass('myborderError');
+
+            $('#ID').val('');
+            $('#FullName').val('');
+            $('#Birthday').val('');
+            $('#Address').val('');
+            $('#Phone').val('');
+            $('#Email').val('');
+            $('#Password').val('');
+            $('#Description').val('');
+
+            $('#Sex').val('Nam').trigger('change');
+            $('#lstRole').val('-1').trigger('change');
+
+            document.getElementById("ID").focus();
+        };
+
+        function fnUpdateUser(_id) {
+            flag_themsua = 1; // Update
+            window.location.href = "#summary";
+            $('#txtTitle').html("Update User");
+            document.getElementById('ID').disabled = true;
+
+            document.getElementById('divTitle').style.color = "Red";
+            document.getElementById('divBody').style.backgroundColor = "#f7ece8";
+            document.getElementById('divFooter').style.backgroundColor = "#f7ece8";
+            document.getElementById('btnSave').style.backgroundColor = "orange";
+            document.getElementById('btnSave').style.borderColor = "#f59907";
+
+            $.ajax({
+                url: "/Home/LoadUser/",
+                data: {
+                    ID: _id
+                },
+                type: "POST",
+                dataType: "json",
+
+                success: function (response) {
+                    if (response != '') {
+                        $('#ID').val(response.ID);
+                        $('#FullName').val(response.FullName);
+                      
+                        $('#Sex').val(response.Sex);
+                        $('#Address').val(response.Address);
+                        $('#Phone').val(response.Phone);
+                        $('#Email').val(response.Email);
+                        $('#Password').val(response.Password);
+                        $('#Description').val(response.Description);
+
+                        if (response.RoleID != null && response.RoleID.trim() != "") {
+                            $('#lstRole').val(response.RoleID).trigger('change');
+                        }
+                        else {
+                            $('#lstRole').val("-1").trigger('change');
+                        };
+
+                        if (response.Birthday != null) {
+                            const d = new Date(response.Birthday.match(/\d+/)[0] * 1);
+                            const formattedDate = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+                            $('#Birthday').val(formattedDate);
+                        }
+                        else {
+                            $('#Birthday').val('');
+                        }
+                    };
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    // alert(xhr.status);
+                    alert("Có lỗi trong quá trình load thông tin User. Vui lòng kiểm tra lại!");
+                }
+            });
+        };
+
+        function fnDeleteUser(_id) {
+            const response = confirm("Bạn có chắc là muốn xóa người dùng này không?");
+
+            if (response) {
+                $.ajax({
+                    url: "/Home/DeleteUser/",
+                    data: {
+                        ID: _id
+                    },
+                    type: "POST",
+                    dataType: "json",
+
+                    success: function (response) {
+                        if (response != '') {
+                            alert(response);
+                            window.location.href = "/Home/UserList/";
+                        };
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        // alert(xhr.status);
+                        alert("Đã có lỗi. Vui lòng kiểm tra lại!");
+                    }
+                });
+            } else {
+                return false;
+            }
+        };
+
+        function CheckEmailFormat(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(email)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        };
+    </script>
+}

@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\BUILD DLL WEB</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="assets/css/custom.css">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/css/styles.css">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/images/bg-header.png">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/images/flag-en.png">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/images/flag-vi.png">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/images/logo.png">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/js/bootstrap.min.js">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/js/jquery.min.js">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/plugins/jquery-validation/jquery.validate.js">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="assets/plugins/jquery-validation/localization/messages_vi.js">
+      <publishTime>10/15/2020 16:08:14</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>10/15/2020 16:08:19</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>10/15/2020 16:08:20</publishTime>
+    </File>
+    <File Include="bin/WEB_TRA_CUU_HDDT.dll">
+      <publishTime>12/28/2020 17:26:53</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="DownloadHandler.ashx">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>10/15/2020 16:08:17</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+      <publishTime>10/15/2020 16:08:17</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+      <publishTime>10/15/2020 16:08:17</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>10/15/2020 16:08:17</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+      <publishTime>10/15/2020 16:08:17</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Models/Model_HDDT.edmx.diagram">
+      <publishTime>10/23/2020 09:40:44</publishTime>
+    </File>
+    <File Include="Models/Model_THAISON.edmx.diagram">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.map">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/respond.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/respond.min.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Template/TEMPLATE_XSLT_01GTKT_AA_HD.xslt">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Template/TEMPLATE_XSLT_01GTKT_AB_HD.xslt">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Template/TEMPLATE_XSLT_A6_TEM_PHIEU_CONGB.xslt">
+      <publishTime>12/27/2020 10:12:21</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Common.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Default.css">
+      <publishTime>10/15/2020 17:38:00</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/1.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/2.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/3.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/Banner 1920x393.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/BNPLogo.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/close_black.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/download.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/Group 20394.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/icon-download-pdf.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/icon-download-xml.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/image/search-blue.png">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/display-flex.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/font.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/jquery-ui-1.9.1.custom.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/jquery.dataTables.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/mask.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Libs/row-flex.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Login.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Master/Header.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/Master/Main.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Content/View.css">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/bootstrap.js">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/Common/Common.js">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/Default.js">
+      <publishTime>10/22/2020 16:47:32</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/Libs/jquery-3.3.1.min.js">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/Libs/jquery-ui.js">
+      <publishTime>10/15/2020 16:08:18</publishTime>
+    </File>
+    <File Include="tra-cuu/Scripts/Site.js">
+      <publishTime>10/22/2020 17:06:19</publishTime>
+    </File>
+    <File Include="Views/Home/About.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Home/Contact.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Home/Error.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>10/22/2020 15:22:34</publishTime>
+    </File>
+    <File Include="Views/Home/Login.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>10/15/2020 16:08:13</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/23/2020 09:43:51</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

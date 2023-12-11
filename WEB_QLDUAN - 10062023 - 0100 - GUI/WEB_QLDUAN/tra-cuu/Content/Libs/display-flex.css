@@ -1,0 +1,20 @@
+﻿/*display flex*/
+.display-flex {
+    display: flex;
+    display: -webkit-flex;
+}
+
+    .display-flex.row {
+        flex-direction: column;
+    }
+
+        .display-flex.row .flex {
+            flex-grow: 1;
+        }
+
+    .display-flex.center {
+        align-items: center;
+        justify-content: center;
+    }
+
+/*end display flex*/

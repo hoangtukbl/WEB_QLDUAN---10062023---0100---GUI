@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Change your password | Project Management";
+    Layout = "~/Views/Shared/_Site.cshtml";
+}
+
+@section Styles{
+
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.css">
+
+    <link href="~/tra-cuu/Content/ChangePass.css" rel="stylesheet" />
+
+    <style>
+        .validation-summary-errors {
+            font-size: 14px;
+            font-family: "Tahoma";
+            color: red;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="">
+    <div class="row" style="margin-bottom:15px; margin-right:10px;">
+        <section class="content-header">
+            <h3 class="" style="color: #dd4b39; margin-top:5px; margin-bottom:3px; display:none;">
+                Change password
+                <small>#@Session["Login"]</small>
+                <i id="TongHop_Loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+                <span id="isMobile"></span>
+            </h3>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Index/'">
+                        <i class=" fa fa-dashboard"></i> Home >
+                    </a>
+                </li>
+                <li class="active">Change password</li>
+            </ol>
+        </section>
+    </div>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs padding-18" style="padding-left:18px;">
+                        <li class="active" style="">
+                            <a data-toggle="tab" href="" style="color:darkgreen;">
+                                <i class="green glyphicon glyphicon-list-alt"></i>
+                                <span style="color:green; font-size:13px; font-family:Tahoma;"> Change your password</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="form-horizontal" style="padding-top:10px; background-color: #d5e4f1;">
+                        <div class="callout callout-warning" style="margin-left:10px; margin-right:10px;">
+                            <i class="icon fa fa-warning"></i>
+                            <span>Please keep your account secure!</span>
+                        </div>
+                        @using (Html.BeginForm("ChangePass", "Home", FormMethod.Post, new { id = "frmChangePass", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="col-sm-3 control-label" style="color:#0070d1; font-weight:normal;">Your current password: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                <div class="col-sm-8">
+                                    <input name="txtMATKHAU" type="password" value="@ViewBag.MATKHAU" id="txtMATKHAU" class="form-control" placeholder="Your current password">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="col-sm-3 control-label" style="color:#0070d1; font-weight:normal;">New password: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                <div class="col-sm-8">
+                                    <input name="txtMATKHAU_NEW" type="password" value="@ViewBag.MATKHAU_NEW" maxlength="10" id="txtMATKHAU_NEW" class="form-control" placeholder="New password">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="col-sm-3 control-label" style="color:#0070d1; font-weight:normal;">Verify new password: <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                <div class="col-sm-8">
+                                    <input name="txtMATKHAU_RENEW" type="password" value="@ViewBag.MATKHAU_RENEW" id="txtMATKHAU_RENEW" class="form-control" placeholder="Retype new password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="text-align:right; color:#0070d1; font-weight:normal;">Notice:</label>
+                                <div class="col-sm-8">
+                                    <label class="control-label" style="font-style:oblique; font-weight:normal;">The new password must contain at least 8 characters, including letters [A-Z] and numbers [0-9].</label>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:5px;">
+                                <div class="col-sm-offset-3 col-sm-9" style="margin-right:12px; font-size:14px">
+                                    @Html.ValidationSummary()
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="padding-bottom:15px; display: flex; justify-content: center;">
+                                <button id="btn_thongke" class="btn btn-primary" type="submit" role="button" style="margin-right:5px; min-width:120px;">
+                                    Save
+                                </button>
+                                <button id="btn_refesh" class="btn btn-success" role="button" type="button" style="min-width:120px;">
+                                    Reset
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@if (ViewData["PASSWORD"] != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert('@Html.Raw(@ViewData["PASSWORD"])');
+            };
+    </script>
+}
+
+@Scripts.Render("~/bundles/jqueryval");
+@section Scripts{
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="~/tra-cuu/Scripts/ChangePass.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#txtMATKHAU').focus();
+
+            $('#btn_refesh').off('click').on('click', function () {
+                $('#txtMATKHAU').val('');
+                $('#txtMATKHAU_NEW').val('');
+                $('#txtMATKHAU_RENEW').val('');
+
+                $('#txtMATKHAU').focus();
+            });
+        });
+    </script>
+}

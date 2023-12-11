@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WEB_QLDUAN.Models.Note>
+
+<table id="dtNote" class="row-border stripe hover order-column" style="background:white; font-size:13px;">
+    <thead>
+        <tr role="row">
+            <th class="center" style="min-width: 23px;">
+                No.
+            </th>
+            <th class="col-md-2 col-xs-2 col-sm-2" style="color:#307ecc;">Created date </th>
+            <th class="col-md-2 col-xs-2 col-sm-2">User create </th>
+            <th class="col-md-3 col-xs-3 col-sm-3">Title </th>
+            <th class="col-md-1 col-xs-1 col-sm-1">Notify </th>
+            <th class="col-md-2 col-xs-2 col-sm-2">Notify date </th>
+            @if (Session["Role"] != null && Session["Role"] == "ADM")
+            {
+                <th class="" style="width:180px;">Actions</th>
+            }
+            else
+            {
+                <th class="" style="width:180px;">Actions</th>
+            }
+        </tr>
+    </thead>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <tbody role="alert">
+            @{
+                var count = 0;
+            }
+            @foreach (var p in Model)
+            {
+                <tr style="" class="">
+                    @{
+                        count = count + 1;
+                    }
+                    <td style="vertical-align: middle;">@count</td>
+                    @if (p.CreatedDate != null && p.CreatedDate.HasValue)
+                    {
+                        <td style="font-weight:600;vertical-align: middle;">@p.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>@p.UserID</td>
+                    <td>@p.Title</td>
+
+                    <td>@p.Notify</td>
+                    @if (p.NotifyDate != null && p.NotifyDate.HasValue)
+                    {
+                        <td style="color:darkorange; font-weight:600;">@p.NotifyDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (Session["Role"] != null && Session["Role"] == "ADM")
+                    {
+                        <td><button style="margin-right:5px; color:darkorange; border-color:orange;" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateNote('@p.ID');" data-target="#myModal3" title="Sửa"><i class="glyphicon glyphicon-edit"></i></button><button style="color:darkred; border-color:red" title="Xóa" onclick="fnDeleteNote('@p.ID');"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    }
+                    else
+                    {
+                        <td><button style="margin-right:5px; color:darkorange; border-color:orange;" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateNote('@p.ID');" data-target="#myModal3" title="Sửa"><i class="glyphicon glyphicon-edit"></i></button><button style="color:darkred; border-color:red" title="Xóa" onclick="fnDeleteNote('@p.ID');"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    }
+</table>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.bootstrap.js"></script>
+
+<script type="text/javascript">
+    $('#dtNote').DataTable();
+
+    $('#dtNote tbody').on('click', 'tr', function () {
+
+        var CreatedDate = $(this).find('td:eq(1)').text();
+        var Notify = $(this).find('td:eq(4)').text();
+        var NotifyDate = $(this).find('td:eq(5)').text();
+
+        // Browse calendar to specific date
+        if (Notify != "" && Notify == "True" && NotifyDate != "") {
+            var d = NotifyDate.substr(0, 2);
+            var m = NotifyDate.substr(3, 2);
+            var y = NotifyDate.substr(6, 4);
+
+            $('#calendar').fullCalendar('gotoDate', new Date(y, m-1, d));
+
+        }
+        else {
+            var d = CreatedDate.substr(0, 2);
+            var m = CreatedDate.substr(3, 2);
+            var y = CreatedDate.substr(6, 4);
+
+            $('#calendar').fullCalendar('gotoDate', new Date(y, m-1, d));
+        }
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            $('#dtNote tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+</script>

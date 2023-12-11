@@ -1,0 +1,170 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Đăng ký tài khoản";
+    @model WEB_QLDUAN.Models.User
+}
+
+<link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+
+<style>
+    #ID:focus, #FullName:focus, #Birthday:focus, #Address:focus, #Phone:focus, #Sex:focus, #Email:focus, #Password:focus {
+        outline: none !important;
+        border-color: #68a2c3 !important;
+        box-shadow: 0 0 6px #719ECE;
+        font-weight: bold;
+        color: dodgerblue;
+    }
+
+    #btnRegister:focus, #btnRegister:hover {
+        outline: none !important;
+        border-color: white !important;
+        box-shadow: 0 0 6px #719ECE;
+        font-weight: bold;
+    }
+
+    .myborderError {
+        border: solid 1px red !important;
+    }
+
+    .login-box {
+        width: 500px;
+    }
+
+    .validation-summary-errors {
+        font-size: 14px;
+        color: red;
+    }
+</style>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="" style="color:darkblue">Project<b>Management</b></a>
+        </div>
+        <div class="login-box-body" style="font-size:14px; font-family:Tahoma;">
+            <h4 class="" style="text-align:center; margin-bottom:15px; color:#2782cf; font-family:Tahoma;">Create a new account</h4>
+            @using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new { id = "frmRegisterForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.ID, new { @class = "form-control", @name = "ID", @id = "ID", @placeholder = "User ID (*)", @type = "text", @style = "text-transform: uppercase;" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @name = "FullName", @id = "FullName", @placeholder = "Full name (*)", @type = "text", @style = "text-transform: uppercase;" })
+                    <span class="glyphicon glyphicon-align-justify form-control-feedback"></span>
+                </div>
+                <div class="form-group" style="">
+                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", @name = "Birthday", @id = "Birthday", @placeholder = "Date of birth", @type = "date" })
+                </div>
+                <div class="form-group" style="">
+                    <select id="Sex" name="Sex" style="" class="form-control" placeholder="Sex">
+                        <option style="font-size:110%;" value="Nam">Nam</option>
+                        <option style="font-size:110%;" value="Nữ">Nữ</option>
+                        <option style="font-size:110%;" value="Không xác định">Không xác định</option>
+                    </select>
+                </div>
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @name = "Address", @id = "Address", @placeholder = "Address", @type = "text" })
+                    <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @name = "Phone", @id = "Phone", @placeholder = "Phone", @type = "text" })
+                    <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @name = "Email", @id = "Email", @placeholder = "Email (*)", @type = "email" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @name = "Password", @id = "Password", @placeholder = "Password (*)", @type = "password" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button id="btnRegister" type="submit" class="btn btn-primary btn-block btn-flat">
+                            Register
+                            <i id="LoginLoading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+            <p style="">Already you have an account? <a href="/Home/Login/" style="color:#1877f2;">Login</a></p>
+        </div>
+    </div>
+</body>
+@if (ViewData["SignUp"] != null && ViewData["SignUp"].ToString().Trim() != "")
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert('@Html.Raw(@ViewData["SignUp"])');
+            };
+    </script>
+}
+
+<script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#Password').on('keypress', function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                event.preventDefault();
+                $('#btnRegister').focus();
+            }
+            else {
+            }
+        });
+
+        $('#btnRegister').off('click').on('click', function () {
+            // this.disabled = true;
+
+            $('#ID').removeClass('myborderError');
+            $('#FullName').removeClass('myborderError');
+            $('#Email').removeClass('myborderError');
+            $('#Password').removeClass('myborderError');
+
+            var ID = $('#ID').val();
+            var FullName = $('#FullName').val();
+            var Email = $('#Email').val();
+            var Password = $('#Password').val();
+
+            if (
+                (ID.trim() == "") || (FullName.trim() == "") || (Email.trim() == "") || (Password.trim() == "")
+            ) {
+                alert("Vui lòng điền đầy đủ thông tin các trường dữ liệu được dánh dấu (*) !");
+                // document.getElementById('btnRegister').disabled = false;
+
+                if (ID == null || ID.trim() == "") {
+                    $('#ID').addClass('myborderError');
+                }
+                if (FullName.trim() == "") {
+                    $('#FullName').addClass('myborderError');
+                }
+                if (Email.trim() == "") {
+                    $('#Email').addClass('myborderError');
+                }
+                if (Password.trim() == "") {
+                    $('#Password').addClass('myborderError');
+                }
+
+                return false;
+            }
+
+            if (Email != null && Email != "" && CheckEmailFormat(Email) == false) {
+                alert("Địa chỉ email không hợp lệ! Vui lòng kiểm tra lại.");
+                // document.getElementById('btnRegister').disabled = false;
+
+                $('#Email').focus();
+                return false;
+            }
+        });
+    });
+</script>

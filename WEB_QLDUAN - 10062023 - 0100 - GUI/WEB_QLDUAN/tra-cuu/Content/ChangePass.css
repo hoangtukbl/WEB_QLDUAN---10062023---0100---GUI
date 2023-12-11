@@ -1,0 +1,27 @@
+﻿.note-tam-giac {
+    margin-top: -5px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 10px solid #FF5138;
+    margin-left: 70px;
+}
+
+.error-message {
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #FF5138;
+    width: 100%;
+    border-radius: 14px;
+    font-size: 13px;
+    margin-left: 10px;
+}
+.sc-item.notify {
+    padding-bottom: 20px !important;
+}
+#Oldpass:focus, #Newpass1:focus, #Newpass2:focus {
+            outline: none !important;
+            border-color: #68a2c3 !important;
+            box-shadow: 0 0 6px #719ECE;
+        }

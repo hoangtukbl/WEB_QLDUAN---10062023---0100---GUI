@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0df4fb7fdcf2435188bd5553b4e684d0" Name="Diagram1">
+        <EntityTypeShape EntityType="QLDUANModel.Note" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDUANModel.Project" Width="1.5" PointX="1.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDUANModel.Task" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDUANModel.User" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDUANModel.UserProject" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDUANModel.UserTask" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="QLDUANModel.FK_Note_User" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDUANModel.FK_Task_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDUANModel.FK_UserProject_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDUANModel.FK_UserTask_Task" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDUANModel.FK_UserProject_User" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDUANModel.FK_UserTask_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QLDUANModel.Link" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="QLDUANModel.FK_Link_Task" />
+        <AssociationConnector Association="QLDUANModel.FK_Link_Task1" />
+        <EntityTypeShape EntityType="QLDUANModel.Role" Width="1.5" PointX="0.75" PointY="17.25" />
+        <AssociationConnector Association="QLDUANModel.FK_User_Role" />
+        <EntityTypeShape EntityType="QLDUANModel.ToDo" Width="1.5" PointX="3" PointY="16.875" />
+        <AssociationConnector Association="QLDUANModel.FK_ToDo_Task" />
+        <AssociationConnector Association="QLDUANModel.FK_Project_User" />
+        <AssociationConnector Association="QLDUANModel.FK_ToDo_User" />
+        <EntityTypeShape EntityType="QLDUANModel.Comment" Width="1.5" PointX="3" PointY="6.625" />
+        <AssociationConnector Association="QLDUANModel.FK_Comment_Task" />
+        <AssociationConnector Association="QLDUANModel.FK_Comment_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

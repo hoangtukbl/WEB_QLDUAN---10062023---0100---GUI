@@ -1,0 +1,139 @@
+﻿@model WEB_QLDUAN.Models.Task
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-widget" style="margin-bottom:0px;">
+            <div class="box-header with-border">
+                <div class="user-block">
+                    <img class="img-circle" src="~/Content/adminlte/dist/img/user-default.png" alt="User Image">
+                    <span class="username"><a href="#">@Model.TaskName</a></span>
+                    <span class="description">@Model.Description</span>
+                </div>
+                <div class="box-tools">
+                    <button name="btncollapsePostComment" type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <p>
+                    @Model.Description
+                </p>
+                <span class="pull-right text-muted"><i class="fa fa-comments-o margin-r-5"></i> @Model.Comments.Count comments</span>
+                <div class="box-footer box-comments">
+                    @foreach (var q in Model.Comments)
+                    {
+                        <div class="box-comment">
+                            <!-- User image -->
+                            <img class="img-circle img-sm" src="~/Content/adminlte/dist/img/user-default.png" alt="User Image">
+                            @{
+                                var color = "#f7f7f7";
+                                if (q.UserID == Session["Login"].ToString().Trim())
+                                {
+                                    color = "#e6f5e1";
+                                }
+                                else // if (q.UserID == p.User)
+                                {
+                                    color = "#fde8c2";
+                                }
+                            }
+                            <div class="comment-text" style="background-color:@color">
+
+                                <span class="username">
+                                    @q.User.FullName
+                                    @if (Session["Role"] != null && Session["Role"].ToString().Trim() == "true")
+                                    {
+                                        <button type="button" onclick="fndeleteComment(this);" value="@q.ID" class="btn btn-box-tool pull-right" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    }
+                                    <span class="text-muted pull-right" style="font-size:10px; font-family:'Times New Roman';">@q.CreatedDate</span>
+                                </span>
+                                @q.Description
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <hr style="border:1px solid #0990f6;" />
+
+                <div class="box-footer">
+                    <img class="img-responsive img-circle img-sm" src="~/Content/adminlte/dist/img/user-default.png" alt="Alt Text">
+                    <div class="img-push">
+                        <input name="txtComment" data-task="@Model.ID" onkeypress="Javascript: if (event.keyCode == 13) fnPostComment(this);" type="text" style="font-size:14px;" class="form-control input-sm" placeholder="Press enter to post comment">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function fnPostComment(e) {
+        if (e.value.trim() != "" && e.getAttribute('data-task').trim() != "") {
+            $.ajax({
+                url: "/Home/PostComment",
+                data: {
+                    Comment: e.value,
+                    TaskID: e.getAttribute('data-task').trim()
+                },
+                type: "POST",
+                success: function (response) {
+                    $("#activity").html(response);
+
+                    if (response.STATUS != null && response.STATUS == "false") {
+                        alert(response.MESSAGE);
+                    }
+                },
+                error: function (response) {
+                    alert("Có lỗi trong quá trình cập nhật dữ liệu. Vui lòng kiểm tra lại!");
+                }
+            });
+        }
+    };
+
+    function fndeleteComment(e) {
+        if (e.value != null) {
+            $.ajax({
+                url: "/Project/DeleteComment",
+                type: "POST",
+                data:
+                {
+                    ID: e.value
+                },
+                success: function (response) {
+
+                    $("#activity").html(response);
+
+                    if (response.STATUS != null && response.STATUS == "false") {
+                        alert(response.MESSAGE);
+                    }
+                },
+
+                error: function (xhr, status, error) {
+                    var err = xhr.responseText;
+                    alert(err);
+                }
+                /*
+                error: function (response) {
+                    alert("Có lỗi trong quá trình cập nhật dữ liệu. Vui lòng kiểm tra lại!");
+                }*/
+            });
+        }
+    }
+
+    $("button[name='btncollapsePostComment']").click(function (e) {
+        e.preventDefault();
+        //Find the box parent
+        var box = $(this).parents(".box").first();
+        //Find the body and the footer
+        var bf = box.find(".box-body, .box-footer");
+        if (!box.hasClass("collapsed-box")) {
+            box.addClass("collapsed-box");
+            $(this).children(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
+            bf.slideUp();
+        } else {
+            box.removeClass("collapsed-box");
+            $(this).children(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
+            bf.slideDown();
+        }
+    });
+</script>

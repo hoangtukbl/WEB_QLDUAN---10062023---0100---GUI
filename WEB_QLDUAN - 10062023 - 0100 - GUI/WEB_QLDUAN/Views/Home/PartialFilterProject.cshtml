@@ -1,0 +1,182 @@
+﻿
+@model IEnumerable<WEB_QLDUAN.Models.Project>
+<div class="table-responsive">
+    <table id="tblProject" class="table table-bordered table-striped" style="">
+        <thead>
+            <tr>
+                <th class="no-sort" style="min-width:110px; text-align:center">
+                    @*<a id="btnAdd" href="/Home/AddProject/"><i class="fa fa-plus-circle"></i> Add Project</a>*@
+                    Action
+                </th>
+                <th style="max-width:48px;">No.</th>
+                <th class="col-md-2">Project ID</th>
+                <th class="col-md-3">Project name</th>
+                <th class="col-md-1">Owner</th>
+                <th class="col-md-1">Users</th>
+                <th class="col-md-2">Start date</th>
+                <th class="col-md-2">End date</th>
+                <th class="col-md-3">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                var count = 0;
+                foreach (var p in Model)
+                {
+                    if (p.Owner != null && Session["Login"] != null && p.Owner.Trim().ToUpper() == Session["Login"].ToString().Trim().ToUpper())
+                    {
+                        <tr style="background-color:orange;">
+                            @{
+                                count = count + 1;
+                            }
+                            <td style="min-width:130px;">
+                                <button class="btn btn-sm btn-default" onclick="fnOpenTaskProject('@p.ID');" title="Open Task" style="border-color:darkorange; color:orangered;">
+                                    Task
+                                </button>
+                                <button class="btn btn-sm btn-primary" title="Edit" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateProject('@p.ID');" data-target="#myModal3">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" title="Remove" data-id="@p.ID" onclick="fnDeleteProject('@p.ID');">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </td>
+                            <td style="max-width:45px;">@count</td>
+                            <td class="col-md-2">@p.ID</td>
+                            <td class="col-md-3">@p.ProjectName</td>
+                            <td class="col-md-1">@p.Owner</td>
+                            <td class="col-md-1">@p.Quantity</td>
+                            @if (p.StartDate != null && p.StartDate.HasValue)
+                            {
+                                <td class="col-md-2">@p.StartDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                            }
+                            else
+                            {
+                                <td class="col-md-2">-</td>
+                            }
+
+                            @if (p.EndDate != null && p.EndDate.HasValue)
+                            {
+                                <td class="col-md-2">@p.EndDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                            }
+                            else
+                            {
+                                <td class="col-md-2">-</td>
+                            }
+                            @{
+                                var tt = "-";
+                                if (p.Status == 0)
+                                {
+                                    tt = " Finish ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:green"> @tt </strong></td>
+                                }
+                                else if (p.Status == 1 && p.EndDate >= DateTime.Now)
+                                {
+                                    tt = " In progress ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:blue"> @tt </strong></td>
+                                }
+                                else if (p.Status == 1 && p.EndDate < DateTime.Now)
+                                {
+                                    tt = " Delay ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:orangered"> @tt </strong></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                };
+                            }
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            @{
+                                count = count + 1;
+                            }
+                            <td style="min-width:130px;">
+                                <button class="btn btn-sm btn-default" onclick="fnOpenTaskProject('@p.ID');" title="Open Task" style="border-color:darkorange; color:orangered;">
+                                    Task
+                                </button>
+                                @if (Session["Role"] != null && Session["Role"].ToString().Trim().ToUpper() == "ADMIN")
+                                {
+                                    <button class="btn btn-sm btn-primary" title="Edit" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateProject('@p.ID');" data-target="#myModal3">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-warning" title="Remove" data-id="@p.ID" onclick="fnDeleteProject('@p.ID');">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                }
+                            </td>
+                            <td style="max-width:45px;">@count</td>
+                            <td class="col-md-2">@p.ID</td>
+                            <td class="col-md-3">@p.ProjectName</td>
+                            <td class="col-md-1">@p.Owner</td>
+                            <td class="col-md-1">@p.Quantity</td>
+                            @if (p.StartDate != null && p.StartDate.HasValue)
+                            {
+                                <td class="col-md-2">@p.StartDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                            }
+                            else
+                            {
+                                <td class="col-md-2">-</td>
+                            }
+
+                            @if (p.EndDate != null && p.EndDate.HasValue)
+                            {
+                                <td class="col-md-2">@p.EndDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                            }
+                            else
+                            {
+                                <td class="col-md-2">-</td>
+                            }
+                            @{
+                                var tt = "-";
+                                if (p.Status == 0)
+                                {
+                                    tt = " Finish ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:green"> @tt </strong></td>
+                                }
+                                else if (p.Status == 1 && p.EndDate >= DateTime.Now)
+                                {
+                                    tt = " In progress ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:blue"> @tt </strong></td>
+                                }
+                                else if (p.Status == 1 && p.EndDate < DateTime.Now)
+                                {
+                                    tt = " Delay ";
+                                    <td class="col-md-3"><strong style="color:white;background-color:orangered"> @tt </strong></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                };
+                            }
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.bootstrap.js"></script>
+
+<script type="text/javascript">
+
+    $('#tblProject').DataTable();
+
+    $("#ProjectIDFilter").val(@ViewBag.idfilter);
+    $("#StartDateFilter").val(@ViewBag.tungayfilter);
+    $("#FinishDateFilter").val(@ViewBag.denngayfilter);
+    $("#StatusFilter").val(@ViewBag.statusfilter);
+
+    $('#tblProject tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            $('#tblProject tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+</script>

@@ -1,0 +1,470 @@
+﻿@{
+    ViewBag.Title = "User profile | Project Management";
+    Layout = "~/Views/Shared/_Site.cshtml";
+    @model WEB_QLDUAN.Models.User
+}
+
+@section Styles{
+
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/adminlte/components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.css">
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+        .myborderError {
+            border: solid 1px red !important;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome */
+            color: green;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-webkit-input-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        :-ms-input-placeholder { /* IE 10+ */
+            color: red;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-ms-input-placeholder {
+            opacity: 0.5;
+            font-size: 9px;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: #ccc;
+            opacity: 0.3;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-moz-placeholder {
+            opacity: 0.5;
+        }
+
+        :-moz-placeholder { /* Firefox 4 - 18 */
+            color: red;
+            opacity: 1;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-moz-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        .modalLoading {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 82%;
+            top: 0;
+            /*background-color: Black;
+                    filter: alpha(opacity=30);
+                    opacity: 0.2;*/
+            -moz-opacity: 0.8;
+        }
+
+        .centerLoading {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 8px;
+            width: 60px;
+            background-color: #d3cccc;
+            border-radius: 5px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+            text-align: center;
+            color: orangered;
+            opacity: 0.8;
+        }
+
+            .centerLoading img {
+                text-align: center;
+            }
+
+        .nav-list li.active > a:after {
+            border-right-color: #000000;
+        }
+
+        .breadcrumb > li + li:before {
+            display: none;
+        }
+
+        .btn-cauhoi {
+            background-color: #c2fbd7;
+            border-radius: 100px;
+            box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+            color: green;
+            cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 250ms;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .btn-cauhoi:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+
+        .table-header {
+            background-color: #438eb9 !important;
+        }
+
+        #btn-scroll-up {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: transparent !important;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+            #btn-scroll-up :hover {
+                background-color: #555;
+            }
+
+        #dtCauHoiThemMoi_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiThemMoi_wrapper .row:last-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:last-child {
+            display: none;
+        }
+
+        .validation-summary-errors {
+            font-size: 14px;
+            /*margin-top: 15px;*/
+            color: red;
+        }
+
+        .glyphicon.fast-right-spinner {
+            -webkit-animation: glyphicon-spin-r 1s infinite linear;
+            animation: glyphicon-spin-r 1s infinite linear;
+        }
+
+        .sidebar::before {
+            background: #585858 !important;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #576373;
+            border-color: #c5d0dc;
+            border-top: 2px solid #4c8fbd;
+            border-bottom-color: transparent;
+            background-color: #FFF;
+            z-index: 12;
+            line-height: 16px;
+            margin-top: -1px;
+            box-shadow: 0 -2px 3px 0 rgba(0,0,0,0.15);
+        }
+
+        .green {
+            color: #69aa46 !important;
+        }
+
+        .table-header {
+            background-color: #307ecc;
+            color: #FFF;
+            font-size: 14px;
+            line-height: 38px;
+            padding-left: 12px;
+            margin-bottom: 5px;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            float: none;
+        }
+
+        .dataTables_length > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_filter > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_info {
+            font-size: 13px;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="">
+    <div class="row" style="margin-right:10px;">
+        <section class="content-header">
+            <h3 class="" style="color: #dd4b39; margin-left:15px; margin-top:5px; margin-bottom:3px; font-family:Tahoma">
+                User profile
+                <small style="font-size:14px;">#@Session["Login"]</small>
+                <i id="TongHop_Loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:12px; display:none;"></i>
+                <span id="isMobile"></span>
+            </h3>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="javascript:void(0);" onclick="location.href='/Home/Index/'">
+                        <i class=" fa fa-dashboard"></i> Home >
+                    </a>
+                </li>
+                <li class="active">About me</li>
+            </ol>
+        </section>
+    </div>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-blue"><i class="fa fa-calendar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total project</span>
+                        <span id="tsduan" class="info-box-number">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Job finish</span>
+                        <span id="tshoanthanh" class="info-box-number">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-pie-graph"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Job in process</span>
+                        <span id="tsdangtienhanh" class="info-box-number">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Job delay</span>
+                        <span id="tstrehan" class="info-box-number">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs padding-18" style="">
+                        <li class="active" style="">
+                            <a data-toggle="tab" href="" style="color:darkgreen;">
+                                <i class="green glyphicon glyphicon-list-alt"></i>
+                                <span style="color:green; font-size:13px; font-family:Tahoma;"> Your infomation</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="form-horizontal" style="background-color: #d5e4f1;">
+                        @using (Html.BeginForm("UpdateInfoUser", "Home", FormMethod.Post, new { id = "frmInfoUser", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken();
+
+                            <div class="col-md-12" style="margin-top:10px;">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">User ID </label>
+                                    <div class="col-sm-10">
+                                        <input id="IDINFO" name="ID" value="@Model.ID" style="font-weight:bold; background-color:#f9fbc8 !important;" type="text" class="form-control" placeholder="User ID" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Full name <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                    <div class="col-sm-10">
+                                        <input id="FullNameINFO" name="FullName" value="@Model.FullName" type="text" class="form-control" placeholder="Full name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal; text-align:right;">Date of birth </label>
+                                    <div class="col-sm-10">
+                                        <input id="BirthDayINFO" name="BirthDay" value="@Model.Birthday" type="date" class="form-control" placeholder="dd/MM/yyyy">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Sex </label>
+                                    <div class="col-sm-10">
+                                        <select id="SexINFO" name="Sex" class="form-control">
+                                            <option style="font-size:110%;" value="Nam">Nam</option>
+                                            <option style="font-size:110%;" value="Nữ">Nữ</option>
+                                            <option style="font-size:110%;" value="Không xác định">Không xác định</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Address </label>
+                                    <div class="col-sm-10">
+                                        <input id="AddressINFO" name="Address" value="@Model.Address" class="form-control" placeholder="Address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Phone </label>
+                                    <div class="col-sm-10">
+                                        <input id="PhoneINFO" name="Phone" value="@Model.Phone" class="form-control" placeholder="Address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Email </label>
+                                    <div class="col-sm-10">
+                                        <input id="EmailINFO" name="Email" value="@Model.Email" type="email" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Password <span style="color: red; font-weight: bold; font-size:13px;"><sup>(*)</sup></span></label>
+                                    <div class="col-sm-10">
+                                        <input id="PasswordINFO" name="Password" value="@Model.Password" type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group" style="margin-bottom:6px;">
+                                    <label for="" class="col-sm-2 control-label" style="color: #0070d1;font-weight:normal;">Description </label>
+                                    <div class="col-sm-10">
+                                        <textarea id="DescriptionINFO" name="Description" class="form-control" placeholder="Description">@Model.Description</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="btnInfoUser" type="submit" class="btn btn-warning" style="width:80px;">
+                                            Save
+                                            <i id="InfoUserLoading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px;display:none;"></i>
+                                        </button>
+                                        <button id="btnRefesh" type="button" class="btn btn-info" style="width:80px;">
+                                            Refesh
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@if (ViewData["UpdateInfo"] != null)
+{
+    <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert('@Html.Raw(@ViewData["UpdateInfo"])');
+            };
+    </script>
+}
+
+@Scripts.Render("~/bundles/jqueryval");
+@section Scripts{
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="~/Content/adminlte/components/chart.js/Chart.js"></script>
+
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/tra-cuu/Scripts/Customer.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var sex = '@Html.Raw(Model.Sex)';
+            $('#SexINFO').val(sex).trigger('change');
+
+            var dateofbirth = '@Html.Raw(ViewBag._birthdayinfo)';
+            if (dateofbirth != null) {
+                const d = new Date(dateofbirth);
+                const formattedDate = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2)
+
+                $('#BirthDayINFO').val(formattedDate);
+            }
+            else {
+                $('#BirthDayINFO').val('');
+            }
+
+            $('#btnInfoUser').off('click').on('click', function () {
+                var id = $('#IDINFO').val();
+                var name = $('#FullNameINFO').val();
+                var password = $('#PasswordINFO').val();
+
+                if (id == '') {
+                    alert("Không xác định đối tượng cần sửa. Vui lòng refesh lại trang web!");
+                    return false;
+                }
+                else if (name == '') {
+                    alert("Vui lòng nhập họ tên người dùng!");
+                    $('#FullNameINFO').focus();
+                    return false;
+                }
+                else if (password == '') {
+                    alert("Vui lòng nhập mật khẩu đăng nhập!");
+                    $('#PasswordINFO').focus();
+                    return false;
+                }
+            });
+
+            $('#btnRefesh').off('click').on('click', function () {
+                window.location.href = "/Home/UserProfile/";
+            });
+        });
+    </script>
+}

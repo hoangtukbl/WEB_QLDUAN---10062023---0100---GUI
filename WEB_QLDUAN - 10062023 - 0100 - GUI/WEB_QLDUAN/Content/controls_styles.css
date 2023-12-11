@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:500');
+
+*{
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.gantt_control{
+    background: #ededed;
+    text-align: center;
+}
+
+.gantt_control input[type=button],
+.gantt_control input[type=file],
+.gantt_control input[type=checkbox],
+.gantt_control button{
+    font: 500 14px Roboto;
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+    background: #fff;
+    padding: 4px 12px;
+    margin: 0 5px;
+    color: rgba(0,0,0,0.7);
+    line-height: 20px;
+}
+
+.gantt_control input[type=button]:hover,
+.gantt_control button:hover{
+    border: 1px solid #B3B3B3;
+    color: rgba(0,0,0,0.8);
+    cursor: pointer;
+}
+
+.gantt_control input[type=button]:active,
+.gantt_control button:active{
+    background: #F7F7F7;
+}
+
+.gantt_control input[type=button]:focus,
+.gantt_control button:focus{
+   outline: none !important;
+}
+
+.gantt_control{
+    padding: 10px 0 12px;
+}
+
+.gantt_control input[type=radio],
+.gantt_control input[type=checkbox]{
+    display:none;
+}
+
+.gantt_control label{
+    padding: 0 6px;
+    color: rgba(0,0,0,0.54);
+    font: 14px Roboto;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+}
+
+.material-icons{
+    position: relative;
+    top: 6px;
+    right: 2px;
+    color: rgba(0,0,0,0.54);
+}
+
+.material-icons.icon_color { 
+    color: #0288D1; 
+}
+
+.material-icons.md-inactive {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.checked_label{
+    color: rgba(0,0,0,0.7)!important;
+}
+
+.gantt_radio:checked,
+.gantt_radio:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+.gantt_radio:checked + label,
+.gantt_radio:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+.gantt_radio:checked + label:before,
+.gantt_radio:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+.gantt_radio:checked + label:after,
+.gantt_radio:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #8a9ada;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.gantt_radio:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+.gantt_radio:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+/*Format Gant chart*/
+#gantt_here {
+    width: 100%;
+    height: calc(100vh - 52px);
+}
+
+.gantt_grid_scale .gantt_grid_head_cell,
+.gantt_task .gantt_task_scale .gantt_scale_cell {
+    font-weight: bold;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.resource_marker {
+    text-align: center;
+}
+
+    .resource_marker div {
+        width: 28px;
+        height: 28px;
+        line-height: 29px;
+        display: inline-block;
+        color: #FFF;
+        margin: 3px;
+    }
+
+    .resource_marker.workday_ok div {
+        border-radius: 15px;
+        background: #51c185;
+    }
+
+    .resource_marker.workday_over div {
+        border-radius: 3px;
+        background: #ff8686;
+    }
+
+.folder_row {
+    font-weight: bold;
+}
+
+.gantt_task_cell.week_end {
+    background-color: #e8e8e87d;
+}
+
+.gantt_task_row.gantt_selected .gantt_task_cell.week_end {
+    background-color: #e8e8e87d !important;
+}
+
+
+.group_row,
+.group_row.odd,
+.gantt_task_row.group_row {
+    background-color: rgba(232, 232, 232, 0.6);
+}
+
+.owner-label {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    display: inline-block;
+    border: 1px solid #cccccc;
+    border-radius: 25px;
+    background: #e6e6e6;
+    color: #6f6f6f;
+    margin: 0 3px;
+    font-weight: bold;
+}
+
+.filters_wrapper {
+    font: 600 14px Roboto;
+}
+
+    .filters_wrapper span {
+        font-weight: bold;
+        padding-right: 5px;
+        color: rgba(0,0,0,0.7);
+    }
+
+    .filters_wrapper label {
+        padding-right: 3px;
+    }
+
+.gantt_control {
+    width: 100%;
+}

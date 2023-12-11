@@ -1,0 +1,1052 @@
+﻿@{
+    ViewBag.Title = "Quản lý dự án";
+    Layout = "~/Views/Shared/_Site.cshtml";
+    @model WEB_QLDUAN.Models.Project
+}
+
+@section Styles{
+
+
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/adminlte/components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.css">
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+        .myborderError {
+            border: solid 1px red !important;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome */
+            color: green;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-webkit-input-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        :-ms-input-placeholder { /* IE 10+ */
+            color: red;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-ms-input-placeholder {
+            opacity: 0.5;
+            font-size: 9px;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: #ccc;
+            opacity: 0.3;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-moz-placeholder {
+            opacity: 0.5;
+        }
+
+        :-moz-placeholder { /* Firefox 4 - 18 */
+            color: red;
+            opacity: 1;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-moz-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        .modalLoading {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 82%;
+            top: 0;
+            /*background-color: Black;
+                    filter: alpha(opacity=30);
+                    opacity: 0.2;*/
+            -moz-opacity: 0.8;
+        }
+
+        .centerLoading {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 8px;
+            width: 60px;
+            background-color: #d3cccc;
+            border-radius: 5px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+            text-align: center;
+            color: orangered;
+            opacity: 0.8;
+        }
+
+            .centerLoading img {
+                text-align: center;
+            }
+
+        .nav-list li.active > a:after {
+            border-right-color: #000000;
+        }
+
+        .breadcrumb > li + li:before {
+            display: none;
+        }
+
+        .btn-cauhoi {
+            background-color: #c2fbd7;
+            border-radius: 100px;
+            box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+            color: green;
+            cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 250ms;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .btn-cauhoi:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+
+        .table-header {
+            background-color: #438eb9 !important;
+        }
+
+        #btn-scroll-up {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: transparent !important;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+            #btn-scroll-up :hover {
+                background-color: #555;
+            }
+
+        #dtCauHoiThemMoi_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiThemMoi_wrapper .row:last-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:last-child {
+            display: none;
+        }
+
+        .validation-summary-errors {
+            font-size: 14px;
+            /*margin-top: 15px;*/
+            color: red;
+        }
+
+        .glyphicon.fast-right-spinner {
+            -webkit-animation: glyphicon-spin-r 1s infinite linear;
+            animation: glyphicon-spin-r 1s infinite linear;
+        }
+
+        .sidebar::before {
+            background: #585858 !important;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #576373;
+            border-color: #c5d0dc;
+            border-top: 2px solid #4c8fbd;
+            border-bottom-color: transparent;
+            background-color: #FFF;
+            z-index: 12;
+            line-height: 16px;
+            margin-top: -1px;
+            box-shadow: 0 -2px 3px 0 rgba(0,0,0,0.15);
+        }
+
+        .green {
+            color: #69aa46 !important;
+        }
+
+        .table-header {
+            background-color: #307ecc;
+            color: #FFF;
+            font-size: 14px;
+            line-height: 38px;
+            padding-left: 12px;
+            margin-bottom: 5px;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            float: none;
+        }
+
+        .dataTables_length > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_filter > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_info {
+            font-size: 13px;
+        }
+
+        .select2 {
+            font-weight: bold;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="">
+    <section class="content-header">
+        <h3 class="" style="color: #dd4b39; margin-top:5px; margin-bottom:3px; display:none;">
+            Project Management
+            <small>#@Session["Login"]</small>
+            <i id="TongHop_Loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+            <span id="isMobile"></span>
+        </h3>
+        <ol class="breadcrumb">
+            <li>
+                <a href="javascript:void(0);" onclick="location.href='/Home/Index/'">
+                    <i class=" fa fa-dashboard"></i> Home >
+                </a>
+            </li>
+            <li class="active">Projects</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs padding-18" style="padding-left:18px;">
+                        <li class="active" style="">
+                            <a data-toggle="tab" href="" style="color:darkgreen;">
+                                <i class="green glyphicon glyphicon-list-alt"></i>
+                                <span style="color:green; font-size:13px; font-family:Tahoma;"> Project Management</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="form-horizontal" style="padding-top: 15px; background-color: #d5e4f1;">
+                        @using (Html.BeginForm("ProjectThongKe", "Home", FormMethod.Post, new { id = "frmProjectThongKe", @class = "", @style = "font-family:Tahoma;" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="form-group" style="margin-bottom:5px;">
+                                <div class="col-sm-12" style="width:100%;">
+                                    <label class="col-sm-3 control-label no-padding-right" style="color:#0070d1; font-weight:normal;">Project ID:</label>
+                                    <div class="input-icon col-sm-9">
+                                        @Html.DropDownListFor(m => m.ID, new SelectList(ViewBag.lstproject, "ID", "ProjectName"), "-- Select project --", new { @class = "form-control select2", @id = "lstID_TK", @style = "font-weight:bold; font-size:13px; height:32px; width:100%;" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:5px">
+                                <div class="col-sm-12" style="width:100%;">
+                                    <label class="col-sm-3 control-label no-padding-right" style="color: #0070d1;font-weight:normal;">From date:</label>
+                                    <div class="input-icon col-sm-9">
+                                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", @style = "font-weight:bold; font-size:13px; height:32px;", @Type = "date", @name = "txtStartDate_TK", @id = "txtStartDate_TK", @placeholder = "From date" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:5px">
+                                <div class="col-sm-12" style="width:100%;">
+                                    <label class="col-sm-3 control-label no-padding-right" style="color: #0070d1;font-weight:normal;">To date:</label>
+                                    <div class="input-icon col-sm-9">
+                                        @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @style = "font-weight:bold; font-size:13px; height:32px;", @Type = "date", @name = "txtEndDate_TK", @id = "txtEndDate_TK", @placeholder = "To date" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:5px">
+                                <div class="col-sm-12" style="width:100%;">
+                                    <label class="col-sm-3 control-label no-padding-right" style="color: #0070d1;font-weight:normal;">Status:</label>
+                                    <div class="input-icon col-sm-9">
+                                        <select id="lstStatus_TK" name="lstStatus_TK" class="form-control" style="font-weight:bold; font-size:13px; height:32px;">
+                                            <option style="font-size:110%;" value="-1">-- Select status --</option>
+                                            <option style="font-size:110%;" value="0">Finish</option>
+                                            <option style="font-size:110%;" value="1">In progress</option>
+                                            <option style="font-size:110%;" value="2">Delay</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- HTML !-->
+                            <div class="form-group" style="padding-bottom: 15px; padding-top:5px;">
+                                <div class="col-sm-12" style="width:100%;">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button id="btn_thongke" class="btn-cauhoi" type="button" style="color:#ff0000;margin-right:5px;">
+                                            Filter
+                                        </button>
+                                        <button id="btn_refesh" class="btn-cauhoi" type="button" style="color:green;">
+                                            Refesh
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @if (Session["Role"] != null && Session["Role"] == "ADM")
+                {
+                    <div class="table-header">
+                        Result filters <a id="btnOpenProject" style="cursor:pointer; color:yellow; font-weight:bold;margin-left:5px;" data-toggle="modal" data-target="#myModal2"><i class="glyphicon glyphicon-plus" title="Thêm mới"></i></a>
+                        <button id="btnOpenTask" style="border-radius:8px; padding:0px; padding-left:5px; padding-right:5px; margin-left:5px; display:none;" class="btn btn-sm btn-warning">Open Task</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-header">
+                        Result filters <a id="btnOpenProject" style="cursor:pointer; color:yellow; font-weight:bold;margin-left:5px" data-toggle="modal" data-target="#myModal2"><i class="glyphicon glyphicon-plus" title="Thêm mới"></i></a>
+                        <button id="btnOpenTask" style="border-radius:8px; padding:0px; padding-left:5px; padding-right:5px; margin-left:5px; display:none;" class="btn btn-sm btn-warning">Open Task</button>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <div id="rowChiTiet">
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-lg vertical-align-center">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background-color: #028efd;">
+                                    <button type="button" class="close" data-dismiss="modal" style="margin-top:-6px; color:white;">
+                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                    </button>
+                                    <i></i>
+                                    <h5 class="modal-title" id="myModalLabel" style="color: white; font-weight: bold;"><i class="glyphicon glyphicon-plus"></i> INSERT NEW PROJECT</h5>
+                                </div>
+
+                                @using (Html.BeginForm("ProjectThemMoi", "Home", FormMethod.Post, new { id = "frmProjectThemMoi", @class = "" }))
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="modal-body" style="font-size: 12px; padding-top: 5px; background-color: #d5e4f1; padding-bottom:0px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Project ID <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.ID, new { @class = "form-control", @style = "text-transform: uppercase; background-color:#f9fbc8 !important;", @name = "ID", @id = "txtID_themmoi", @placeholder = "Project ID" })
+                                                        @*<input name="txtMACH_capnhat" type="text" value="" id="txtMACH_capnhat" style="text-transform: uppercase;" class="col-xs-12 col-sm-12" placeholder="Mã câu hỏi">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; COLOR: #016abb; font-weight:normal;">Project Name <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @style = "margin-top:5px;", @name = "txtProjectName_themmoi", @id = "txtProjectName_themmoi", @placeholder = "Project Name" })
+                                                        @*<input name="" type="text" value="" id="" class="col-xs-12 col-sm-12">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Start date <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", @style = "margin-top:5px;", @Type = "date", @name = "txtStartDate_themmoi", @id = "txtStartDate_themmoi", @placeholder = "Start date" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">End date <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @style = "margin-top:5px;", @Type = "date", @name = "txtEndDate_themmoi", @id = "txtEndDate_themmoi", @placeholder = "End date" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Members <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10" style="margin-top:5px;">
+                                                        <select id="lstUser_themmoi" class="form-control" style="width: 100%; margin-top:5px; height:32px;" multiple="multiple"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Status <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10" style="margin-top:5px;">
+                                                        <select id="lstStatus_themmoi" class="form-control select2" style="width: 100%; margin-top:5px; height:32px;">
+                                                            <option value="-1" selected disabled>Choose status</option>
+                                                            <option value="1">In progress</option>
+                                                            <option value="0">Finish</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Description </label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "margin-top:5px;", @name = "txtDescription_themmoi", @id = "txtDescription_themmoi", @placeholder = "Description" })
+                                                        @*<input name="" type="text" value="" id="" class="col-xs-12 col-sm-12">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @Html.ValidationSummary()
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="margin-top:0px;">
+                                        <button id="btnInsert" type="submit" class="btn-cauhoi" style="color: #ff0000; margin-right:5px">
+                                            Save
+                                        </button>
+                                        <button id="btnCloseThemMoi" type="reset" class="btn-cauhoi" data-dismiss="modal">Close</button>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-lg vertical-align-center">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background-color: #f58f1a;">
+                                    <button type="button" class="close" data-dismiss="modal" style="margin-top:-6px; color:white;">
+                                        <span style="color:white;" aria-hidden="true">&times;</span><span style="color:white" class="sr-only">Close</span>
+                                    </button>
+                                    <i></i>
+                                    <h5 class="modal-title" id="myModalLabel" style="color: white; font-weight: bold;"><i class="glyphicon glyphicon-th"></i><span style="margin-left:5px;">UPDATE PROJECT</span></h5>
+                                </div>
+
+                                @using (Html.BeginForm("ProjectCapNhat", "Home", FormMethod.Post, new { id = "frmProjectCapNhat", @class = "" }))
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="modal-body" style="font-size: 12px; padding-top: 5px; background-color: #f7ece8; padding-bottom: 0px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Project ID <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.ID, new { @class = "form-control", @style = "text-transform: uppercase; background-color:#f9fbc8 !important;", @name = "ID", @id = "txtID_capnhat", @placeholder = "Project ID", @readonly = true })
+                                                        @*<input name="txtMACH_capnhat" type="text" value="" id="txtMACH_capnhat" style="text-transform: uppercase;" class="col-xs-12 col-sm-12" placeholder="Mã câu hỏi">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; COLOR: #016abb; font-weight:normal;">Project Name <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @style = "margin-top:5px;", @name = "txtProjectName_capnhat", @id = "txtProjectName_capnhat", @placeholder = "Project Name" })
+                                                        @*<input name="" type="text" value="" id="" class="col-xs-12 col-sm-12">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Start date <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", @style = "margin-top:5px;", @Type = "date", @name = "txtStartDate_capnhat", @id = "txtStartDate_capnhat", @placeholder = "Start date" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">End date <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @style = "margin-top:5px;", @Type = "date", @name = "txtEndDate_capnhat", @id = "txtEndDate_capnhat", @placeholder = "End date" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Members <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10" style="margin-top:5px;">
+                                                        <select id="lstUser_capnhat" class="form-control" style="width: 100%; margin-top:5px; height:32px;" multiple="multiple"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Status <span style="color: red; font-size:13px;"><sup>(*)</sup></span></label>
+                                                    <div class="col-md-10" style="margin-top:5px;">
+                                                        <select id="lstStatus_capnhat" class="form-control select2" style="width: 100%; margin-top:5px; height:32px;">
+                                                            <option value="-1" selected disabled>Choose status</option>
+                                                            <option value="1">In progress</option>
+                                                            <option value="0">Finish</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="margin-top: 10px; color: #016abb; font-weight:normal;">Description </label>
+                                                    <div class="col-md-10">
+                                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "margin-top:5px;", @name = "txtDescription_capnhat", @id = "txtDescription_capnhat", @placeholder = "Description" })
+                                                        @*<input name="" type="text" value="" id="" class="col-xs-12 col-sm-12">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @Html.ValidationSummary()
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="margin-top:0px;">
+                                        <button id="btnUpdate" type="submit" class="btn-cauhoi" style="color: #ff0000; margin-right:5px">
+                                            Save
+                                        </button>
+                                        <button id="btnClose" type="reset" class="btn-cauhoi" data-dismiss="modal">Close</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@if (ViewData["DialogProject"] != null)
+{
+    if (ViewData["PROJECT_THEMMOI"] != null)
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                document.getElementById("btnOpenProject").click();
+                alert('@Html.Raw(@ViewData["PROJECT_THEMMOI"])');
+            };
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                document.getElementById("btnOpenProject").click();
+            };
+        </script>
+    }
+}
+else
+{
+    if (ViewData["PROJECT_THEMMOI"] != null)
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                alert('@Html.Raw(@ViewData["PROJECT_THEMMOI"])');
+            };
+        </script>
+    }
+}
+
+@if (ViewData["PROJECT_CAPNHAT"] != null)
+{
+    <script type="text/javascript" charset="utf-8">
+        window.onload = function () {
+            alert('@Html.Raw(@ViewData["PROJECT_CAPNHAT"])');
+            document.getElementById("btn_thongke").click();
+        };
+    </script>
+}
+
+@Scripts.Render("~/bundles/jqueryval");
+@section Scripts{
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="~/Content/adminlte/components/chart.js/Chart.js"></script>
+
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/tra-cuu/Scripts/Customer.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.select2').select2();
+            
+            $('#lstUser_themmoi').select2({
+                placeholder: 'Click to add User',
+                allowClear: true,
+                dropdownAutoHeight: true,
+                templateResult: function (idioma) {
+                    var iconUrl = $(idioma.element).attr('data-iconurl');
+                    var $span = $("<span><img class='img-circle' style='width:40px; height:40px' src='/Content/adminlte/dist/img/" + iconUrl + "'/> " + idioma.text + "</span>");
+                    return $span;
+                },
+                templateSelection: function (idioma) {
+                    var iconUrl = $(idioma.element).attr('data-iconurl');
+                    var $span = $("<span><img class='img-circle' style='width:30px; height:30px' src='/Content/adminlte/dist/img/" + iconUrl + "'/> " + idioma.text + "</span>");
+                    return $span;
+                }
+            });
+
+            $('#lstUser_capnhat').select2({
+                placeholder: 'Click to add User',
+                allowClear: true,
+                dropdownAutoHeight: true,
+                templateResult: function (idioma) {
+                    var iconUrl = $(idioma.element).attr('data-iconurl');
+                    var $span = $("<span><img class='img-circle' style='width:40px; height:40px' src='/Content/adminlte/dist/img/" + iconUrl + "'/> " + idioma.text + "</span>");
+                    return $span;
+                },
+                templateSelection: function (idioma) {
+                    var iconUrl = $(idioma.element).attr('data-iconurl');
+                    var $span = $("<span><img class='img-circle' style='width:30px; height:30px' src='/Content/adminlte/dist/img/" + iconUrl + "'/> " + idioma.text + "</span>");
+                    return $span;
+                }
+            });
+
+            $.ajax({
+                url: "/Home/LoadUserListAjax",
+                type: "POST",
+                dataType: "json",
+                success: function (response) {
+                    if (response != '') {
+                        for (i in response) {
+                            $("#lstUser_themmoi").append("<option value='" + response[i].MA + "' data-iconurl='" + response[i].FILE + "'>" + response[i].TEN + "</option>");
+                            $("#lstUser_capnhat").append("<option value='" + response[i].MA + "' data-iconurl='" + response[i].FILE + "'>" + response[i].TEN + "</option>");
+                        }
+                        $('#lstUser_themmoi').val('').trigger('change');
+                        $('#lstUser_capnhat').val('').trigger('change');
+                    };
+                },
+            });
+
+            $('#btn_thongke').off('click').on('click', function () {
+                this.disabled = true;
+
+                $('#txtStartDate_TK').removeClass('myborderError');
+                $('#txtEndDate_TK').removeClass('myborderError');
+
+                //$('#FilterProjectLoading').show();
+
+                var ID = $('#lstID_TK').val();
+                var TUNGAY = $('#txtStartDate_TK').val();
+                var DENNGAY = $('#txtEndDate_TK').val();
+                var STATUS = $('#lstStatus_TK').val();
+
+                var form = $('#frmProjectThongKe');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var uri = "/Home/FilterProject/";
+
+                if (((TUNGAY == null || TUNGAY.trim() == "") && (DENNGAY != null && DENNGAY.trim() != ""))
+                    || ((DENNGAY == null || DENNGAY.trim() == "") && (TUNGAY != null && TUNGAY.trim() != ""))
+                ) {
+                    if (TUNGAY == null || TUNGAY.trim() == "") {
+                        alert("Vui lòng nhập từ ngày!");
+
+                        document.getElementById('btn_thongke').disabled = false;
+                        $('#txtStartDate_TK').addClass('myborderError');
+                        $('#txtStartDate_TK').focus();
+                    }
+                    else if (DENNGAY == null || DENNGAY.trim() == "") {
+                        alert("Vui lòng nhập đến ngày!");
+
+                        document.getElementById('btn_thongke').disabled = false;
+                        $('#txtEndDate_TK').addClass('myborderError');
+                        $('#txtEndDate_TK').focus();
+                    }
+                }
+                else {
+                    $.ajax({
+                        url: uri,
+                        data: {
+                            __RequestVerificationToken: token,
+                            ID: ID,
+                            TuNgay: TUNGAY,
+                            DenNgay: DENNGAY,
+                            Status: STATUS
+                        },
+                        type: "POST",
+                        success: function (response) {
+                            //$('#FilterProjectLoading').hide();
+                            document.getElementById('btn_thongke').disabled = false;
+                            $('#rowChiTiet').html(response);
+                            location.href = "#rowChiTiet";
+                        },
+                        error: function (xhr, status, error) {
+                            //$("FilterProjectLoading").hide();
+                            var err = xhr.responseText;
+                            alert(err);
+                            document.getElementById('btn_thongke').disabled = false;
+
+                        }
+                        //error: function (response) {
+                        //    //$("FilterUserLoading").hide();
+                        //    alert("Có lỗi trong quá trình tra cứu dữ liệu. Vui lòng kiểm tra lại!");
+                        //    document.getElementById('btn_thongke').disabled = false;
+                        //}
+                    });
+                }
+            });
+
+            $('#btn_refesh').off('click').on('click', function () {
+                window.location.href = "/Home/Project/";
+            });
+
+            $('#btnCloseThemMoi').off('click').on('click', function () {
+                $('#txtID_themmoi').val('');
+                $('#txtProjectName_themmoi').val('');
+                $('#txtStartDate_themmoi').val('');
+                $('#txtEndDate_themmoi').val('');
+                $('#txtDescription_themmoi').val('');
+                $('#lstUser_themmoi').val('');
+
+                $('#txtID_themmoi').removeClass('myborderError');
+                $('#txtProjectName_themmoi').removeClass('myborderError');
+                $('#txtStartDate_themmoi').removeClass('myborderError');
+                $('#txtEndDate_themmoi').removeClass('myborderError');
+                $('#txtEndDate_themmoi').removeClass('myborderError');
+                $('.select2-selection--multiple').removeClass('myborderError');
+                $('.select2-selection--single').removeClass('myborderError');
+
+                $('.validation-summary-errors').remove();
+            });
+
+            $('#btnInsert').off('click').on('click', function () {
+                this.disabled = true;
+
+                $('#txtID_themmoi').removeClass('myborderError');
+                $('#txtProjectName_themmoi').removeClass('myborderError');
+                $('#txtStartDate_themmoi').removeClass('myborderError');
+                $('#txtEndDate_themmoi').removeClass('myborderError');
+                $('#txtEndDate_themmoi').removeClass('myborderError');
+                $('.select2-selection--multiple').removeClass('myborderError');
+                $('.select2-selection--single').removeClass('myborderError');
+
+                var form1 = $('#frmProjectThemMoi');
+                var token1 = $('input[name="__RequestVerificationToken"]', form1).val();
+
+                var ID = $('#txtID_themmoi').val();
+                var ProjectName = $('#txtProjectName_themmoi').val();
+                var StartDate = $('#txtStartDate_themmoi').val();
+                var EndDate = $('#txtEndDate_themmoi').val();
+                var Description = $('#txtDescription_themmoi').val();
+                var countUser = $("#lstUser_themmoi option:selected").length;
+                var Status = $('#lstStatus_themmoi').val();
+
+                if (
+                    (ID == null || ID.trim() == "")
+                    || (ProjectName.trim() == "")
+                    || (StartDate.trim() == "") || (EndDate.trim() == "")
+                    || (countUser == null || countUser <= 0)
+                    || Status == null || Status.trim() == "-1"
+                ) {
+                    alert("Vui lòng điền đầy đủ thông tin với các trường dữ liệu được dánh dấu (*)");
+                    document.getElementById('btnInsert').disabled = false;
+
+                    if (ID == null || ID.trim() == "") {
+                        $('#txtID_themmoi').addClass('myborderError');
+                    }
+                    if (ProjectName.trim() == "") {
+                        $('#txtProjectName_themmoi').addClass('myborderError');
+                    }
+                    if (StartDate.trim() == "") {
+                        $('#txtStartDate_themmoi').addClass('myborderError');
+                    }
+                    if (EndDate.trim() == "") {
+                        $('#txtEndDate_themmoi').addClass('myborderError');
+                    }
+                    if (Status == null || Status.trim() == "-1") {
+                        $('.select2-selection--single').addClass('myborderError');
+                    }
+                    if (countUser == null || countUser <= 0) {
+                        $('.select2-selection--multiple').addClass('myborderError');
+                    }
+
+                    return false;
+                }
+                else {
+                    var lstUser = [];
+                    $.each($("#lstUser_themmoi option:selected"), function () {
+                        lstUser.push($(this).val());
+                    });
+                    var User = lstUser.join(",");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/ProjectThemMoi/",
+                        data: {
+                            __RequestVerificationToken: token1,
+                            ID: ID,
+                            ProjectName: ProjectName,
+                            StartDate: StartDate,
+                            EndDate: EndDate,
+                            Description: Description,
+                            Status: Status,
+                            User: User
+                        },
+                        //contentType: "application/json; charset=utf-8",
+                        //dataType: "json",
+                        success: function (response) {
+                            if (response.STATUS == "true") {
+                                alert(response.MESSAGE);
+                                window.location.href = "/Home/Project/";
+                            }
+                            else if (response.STATUS == "false") {
+                                alert(response.MESSAGE);
+                            }
+                            else {
+                                alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                            }
+
+                            document.getElementById('btnInsert').disabled = false;
+                        },
+                        error: function (xhr, status, error) {
+                            var err = xhr.responseText;
+                            alert(err);
+                        }
+                        //error: function (response) {
+                        //    alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                        //    document.getElementById('btnInsertProject').disabled = false;
+                        //}
+                    });
+                }
+            });
+
+            $('#btnUpdate').off('click').on('click', function () {
+                this.disabled = true;
+
+                $('#txtID_capnhat').removeClass('myborderError');
+                $('#txtProjectName_capnhat').removeClass('myborderError');
+                $('#txtStartDate_capnhat').removeClass('myborderError');
+                $('#txtEndDate_capnhat').removeClass('myborderError');
+                $('.select2-selection--multiple').removeClass('myborderError');
+                $('.select2-selection--single').removeClass('myborderError');
+
+                var form2 = $('#frmProjectCapNhat');
+                var token2 = $('input[name="__RequestVerificationToken"]', form2).val();
+
+                var ID = $('#txtID_capnhat').val();
+                var ProjectName = $('#txtProjectName_capnhat').val();
+                var StartDate = $('#txtStartDate_capnhat').val();
+                var EndDate = $('#txtEndDate_capnhat').val();
+                var Description = $('#txtDescription_capnhat').val();
+                var countUser = $("#lstUser_capnhat option:selected").length;
+                var Status = $('#lstStatus_capnhat').val();
+
+                if (ID == null || ID.trim() == "") {
+                    alert("Không xác định được đối tượng cần sửa dữ liệu! Vui lòng refesh lại trang web.");
+                    document.getElementById('btnUpdate').disabled = false;
+                }
+                else if (
+                    (ProjectName.trim() == "")
+                    || (StartDate.trim() == "") || (EndDate.trim() == "")
+                    || (countUser == null || countUser <= 0)
+                    || (Status == null || Status.trim() == "")
+                ) {
+                    alert("Vui lòng điền đầy đủ thông tin với các trường dữ liệu được dánh dấu (*)");
+                    document.getElementById('btnUpdate').disabled = false;
+
+                    if (ProjectName.trim() == "") {
+                        $('#txtProjectName_capnhat').addClass('myborderError');
+                    }
+                    if (StartDate.trim() == "") {
+                        $('#txtStartDate_capnhat').addClass('myborderError');
+                    }
+                    if (EndDate.trim() == "") {
+                        $('#txtEndDate_capnhat').addClass('myborderError');
+                    }
+                    if (countUser == null || countUser <= 0) {
+                        $('.select2-selection--multiple').addClass('myborderError');
+                    }
+                    if (Status == null || Status.trim() == "") {
+                        $('.select2-selection--single').addClass('myborderError');
+                    }
+
+                    return false;
+                }
+                else {
+                    var lstUser = [];
+                    $.each($("#lstUser_capnhat option:selected"), function () {
+                        lstUser.push($(this).val());
+                    });
+                    var User = lstUser.join(",");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/ProjectCapNhat/",
+                        data: {
+                            __RequestVerificationToken: token2,
+                            ID: ID,
+                            ProjectName: ProjectName,
+                            StartDate: StartDate,
+                            EndDate: EndDate,
+                            Description: Description,
+                            Status: Status,
+                            User: User
+                        },
+                        //contentType: "application/json; charset=utf-8",
+                        //dataType: "json",
+                        success: function (response) {
+                            if (response.STATUS == "true") {
+                                alert(response.MESSAGE);
+                                window.location.href = "/Home/Project/";
+                            }
+                            else if (response.STATUS == "false") {
+                                alert(response.MESSAGE);
+                            }
+                            else {
+                                alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                            }
+
+                            document.getElementById('btnUpdate').disabled = false;
+                        },
+                        error: function (xhr, status, error) {
+                            var err = xhr.responseText;
+                            alert(err);
+                        }
+                        //error: function (response) {
+                        //    alert("Có lỗi trong quá trình thêm dữ liệu. Vui lòng kiểm tra lại!");
+                        //    document.getElementById('btnInsertProject').disabled = false;
+                        //}
+                    });
+                };
+            });
+
+            document.getElementById("btn_thongke").click();
+        });
+
+        function fnOpenTaskProject(_id) {
+            window.location.href = "/Home/AddTaskProject?ID=" + _id;
+        };
+
+        function fnUpdateProject(_id) {
+            $.ajax({
+                url: "/Home/LoadProject/",
+                data: {
+                    ID: _id
+                },
+                type: "POST",
+                dataType: "json",
+
+                success: function (response) {
+                    if (response != '') {
+                        $('#txtID_capnhat').val(response.ID);
+                        $('#txtProjectName_capnhat').val(response.ProjectName);
+
+                        $('#txtDescription_capnhat').val(response.Description);
+
+                        if (response.User != null && response.User.trim() != "") {
+                            var arrayUser = new Array();
+                            arrayUser = response.User.trim().split(',')
+                            $("#lstUser_capnhat").val(arrayUser).trigger('change');
+                        }
+                        else {
+                            $("#lstUser_capnhat").val(null).trigger('change');
+                        }
+
+                        if (response.Status != null) {
+                            $("#lstStatus_capnhat").val(response.Status).trigger('change');
+                        }
+                        else {
+                            $("#lstStatus_capnhat").val(-1).trigger('change');
+                        }
+
+                        if (response.StartDate != null) {
+                            const d = new Date(response.StartDate.match(/\d+/)[0] * 1);
+                            const formattedDate = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+
+                            $('#txtStartDate_capnhat').val(formattedDate);
+                        }
+                        else {
+                            $('#txtStartDate_capnhat').val('');
+                        }
+
+                        if (response.EndDate != null) {
+                            const d = new Date(response.EndDate.match(/\d+/)[0] * 1);
+                            const formattedDate = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+                            $('#txtEndDate_capnhat').val(formattedDate);
+                        }
+                        else {
+                            $('#txtEndDate_capnhat').val('');
+                        }
+                    };
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    // alert(xhr.status);
+                    alert("Có lỗi trong quá trình load thông tin task. Vui lòng kiểm tra lại!");
+                }
+            });
+        };
+
+        function fnDeleteProject(_id) {
+            const response = confirm("Bạn có chắc là muốn xóa project này ?");
+
+            if (response) {
+                $.ajax({
+                    url: "/Home/DeleteProject/",
+                    data: {
+                        ID: _id
+                    },
+                    type: "POST",
+                    dataType: "json",
+
+                    success: function (response) {
+                        if (response != '') {
+                            alert(response);
+                            document.getElementById("btn_thongke").click();
+                        };
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        // alert(xhr.status);
+                        alert("Đã có lỗi. Vui lòng kiểm tra lại!");
+                    }
+                });
+            } else {
+                return false;
+            }
+        };
+
+        function CheckEmailFormat(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(email)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        };
+    </script>
+}

@@ -1,0 +1,127 @@
+﻿
+.dropdown-menu li {
+    font-size: 13px;
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    color: #08c;
+    padding: 3px 12px;
+    margin: 3px 0px;
+    cursor: pointer;
+}
+
+::placeholder {
+    padding-left: 3px;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.dropdown-menu li:hover {
+    background-color: #0088CC;
+    color: white;
+}
+
+.input-group-addon {
+    cursor: pointer;
+}
+
+.dropdown-menu .divider {
+    margin: 6px 0px;
+    padding: 0px;
+    background-color: rgba(50,150,255,0.5);
+}
+
+.note-tam-giac {
+    margin-top: -5px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 10px solid #FF5138;
+    margin-left: 70px;
+}
+
+.error-message {
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #FF5138;
+    width: 100%;
+    border-radius: 14px;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+.sc-item.notify {
+    padding-bottom: 20px !important;
+}
+
+.info-box-icon {
+    height: 80px;
+}
+
+.info-box {
+    min-height: 80px;
+}
+
+.fa-sort {
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #949494;
+}
+
+#clearable {
+    position: relative;
+    display: inline-block;
+}
+
+    #clearable input[type=text] {
+        padding-right: 24px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        /*border-radius: 4px !important;*/
+        height: 32px;
+        padding-left: 10px;
+        font-size: 13px;
+    }
+
+.clearIcon, #loadingSearchTable{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    padding: 0 20px;
+    font-style: normal;
+    font-size: 0.9em;
+    user-select: none;
+    cursor: pointer;
+}
+
+.clearable input::-ms-clear { /* Remove IE default X */
+    display: none;
+}
+
+
+#txtTextSearchTable:focus {
+    outline: none !important;
+    border-color: #68a2c3 !important;
+    box-shadow: 0 0 6px #719ECE;
+}
+
+#LoaiTien:focus {
+    outline: none !important;
+    border-color: #68a2c3 !important;
+    box-shadow: 0 0 6px #719ECE;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 1px solid whitesmoke;
+    font-stretch: extra-expanded;
+    font-style: italic;
+}
+
+        

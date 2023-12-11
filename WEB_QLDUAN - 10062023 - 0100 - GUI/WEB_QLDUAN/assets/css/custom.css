@@ -1,0 +1,13 @@
+@media (min-width: 1024px){
+  .navbar-nav > li > ul.sub--mega {
+  left: auto;
+  min-width: 800px;
+  }
+}
+
+@media (min-width: 1280px){
+  .navbar-nav > li > ul.sub--mega {
+  left: auto;
+  min-width: 1000px;
+  }
+}

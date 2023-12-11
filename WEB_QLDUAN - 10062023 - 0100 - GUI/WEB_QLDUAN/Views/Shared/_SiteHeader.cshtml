@@ -1,0 +1,217 @@
+﻿
+<link href="~/tra-cuu/Content/SiteHeader.css" rel="stylesheet" />
+<header class="main-header" id="Header">
+    @if (Session["Role"] != null && Session["Role"].ToString().Trim().ToUpper() == "ADMIN")
+    {
+        <div class="navbar-fixed">
+            <div class="container" style="width:100%; background-color:whitesmoke">
+                <a href="/" class="navbar-brand" title="WEB_QLDUAN" style="margin-left:5px;"><img style="height:30px" src="/assets/images/logo02.png" alt="WEB_QLDUAN"></a>
+                <div class="label-myCompany">
+                    <span>Web Project Management</span>
+                </div>
+                <nav class="collapse navbar-collapse" id="bs-navbar" style="overflow:hidden; margin-top:8px;">
+                    <ul class="navbar-nav onepage pull-left">
+                        <li class="pull-left">
+                            <a href="/" style="margin-left:5px; text-align: center; font-size: 14px; color: #0c7cc5; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">Project Management | Webpage Admin</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav onepage pull-right">
+                        <li class="hidden-sm hidden-xs hidden-md">
+                            <a>
+                                <i class="fa fa-calendar"></i><span id="myDateTime" style="color:#0c7cc5; padding-left:5px;"></span>
+                            </a>
+                        </li>
+                        <li class="hidden-sm hidden-xs hidden-md" style="color: rgba(173, 156, 156, 0.8);">|</li>
+                        <li class="hidden-sm">
+                            <a>
+                                <i class="fa fa-phone-square"></i><span style="color:#0c7cc5; padding-left:5px;">Phone: (84-028) 3800 0000</span>
+                            </a>
+                        </li>
+                        <li class="hidden-sm" style="color: rgba(173, 156, 156, 0.8);">|</li>
+                        <li class="">
+                            <a>
+                                <i class="fa fa-envelope"></i><span style="color:#0c7cc5; padding-left:5px;">Email: info@projectmanagement.com.vn</span>
+                            </a>
+                        </li>
+                        <li style="color: rgba(173, 156, 156, 0.8)">|</li>
+                        <li class="" style="margin-right:0px;">
+                            <a title="Tiếng Việt" style="background-image: url(/assets/images/flag-vi.png);">
+                                <img class="iconVN" src="/assets/images/flag-vi.png" alt="vi">
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="myHeader">
+            <a class="logo" style="background:#FF9800">
+                <span class="logo-mini"><small><b>PM</b></small></span>
+                @if (Session["Role"] != null && Session["Role"].ToString().Trim() == "Admin")
+                {
+                    <span class="logo-lg" style="font-size:16px"><small><b>Welcome, Admin!</b></small></span>
+                }
+                else
+                {
+                    <span class="logo-lg" style="font-size:16px"><small><b>Welcome, User!</b></small></span>
+                }
+
+            </a>
+            <nav class="navbar navbar-static-top" style="background:#fbc217">
+                <a class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                            <a href="javascript:void(0);" onclick="location.href='/Project/'" title="Trang chủ">
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="dropdown messages-menu">
+                            <a id="contact" href="javascript:void(0);" onclick="scrollToBottom();" title="Liên hệ">
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/Content/adminlte/dist/img/group_key.png" class="user-image" alt="">
+                                <span class="hidden-xs">#@Session["Login"]</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header" style="margin:0px;">
+                                    <img style="background-color:whitesmoke;" src="~/Content/adminlte/dist/img/customers_icon_01.PNG" class="img-circle" alt="">
+                                    <p style="color: white; font-family:Times New Roman, Tahoma, Helvetica Neue,Helvetica,Arial,sans-serif; " title="@ViewBag._fullname">
+                                        @ViewBag._fullname
+                                    </p>
+                                </li>
+                                <li class="user-body" style="background-color: #e9f5fa; margin:0px;">
+                                    <p style=" margin:0px;" title="@ViewBag._address">
+                                        @ViewBag._address
+                                    </p>
+                                </li>
+                                <li class="user-footer" style="background-color: #a1ceef; text-align: justify; margin:1px;">
+                                    <div class="pull-left">
+                                        <a id="btnUserChangePass" href="javascript:void(0);" onclick="location.href='/Home/ChangePass/'" class="btn btn-info">Change password</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a id="btnUserLogout" href="javascript:void(0);" onclick="location.href='/Home/Logout/'" class="btn btn-warning">Log out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    }
+    else
+    {
+        <div class="navbar-fixed">
+            <div class="container" style="width:100%; background-color:whitesmoke">
+                <a href="/" class="navbar-brand" title="WEB_QLDUAN" style="margin-left:5px;"><img style="height:30px" src="/assets/images/logo02.png" alt="WEB_QLDUAN"></a>
+                <div class="label-myCompany">
+                    <span>Web Project Management</span>
+                </div>
+                <nav class="collapse navbar-collapse" id="bs-navbar" style="overflow:hidden; margin-top:8px;">
+                    <ul class="navbar-nav onepage pull-left">
+                        <li class="pull-left">
+                            <a href="/" style="margin-left:5px; text-align: center; font-size: 14px; color: #0c7cc5; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">Project Management | Webpage User</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav onepage pull-right">
+                        <li class="hidden-sm hidden-xs hidden-md">
+                            <a>
+                                <i class="fa fa-calendar"></i><span id="myDateTime" style="color:#0c7cc5; padding-left:5px;"></span>
+                            </a>
+                        </li>
+                        <li class="hidden-sm hidden-xs hidden-md" style="color: rgba(173, 156, 156, 0.8);">|</li>
+                        <li class="hidden-sm">
+                            <a>
+                                <i class="fa fa-phone-square"></i><span style="color:#0c7cc5; padding-left:5px;">Phone: (84-028) 3800 0000</span>
+                            </a>
+                        </li>
+                        <li class="hidden-sm" style="color: rgba(173, 156, 156, 0.8);">|</li>
+                        <li class="">
+                            <a>
+                                <i class="fa fa-envelope"></i><span style="color:#0c7cc5; padding-left:5px;">Email: info@projectmanagement.com.vn</span>
+                            </a>
+                        </li>
+                        <li style="color: rgba(173, 156, 156, 0.8)">|</li>
+                        <li class="" style="margin-right:0px;">
+                            <a title="Tiếng Việt" style="background-image: url(/assets/images/flag-vi.png);">
+                                <img class="iconVN" src="/assets/images/flag-vi.png" alt="vi">
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+        </div>
+        <div id="myHeader">
+            <a class="logo">
+                <span class="logo-mini"><small><b>PM</b></small></span>
+                @if (Session["Role"] != null && Session["Role"].ToString().Trim() == "Admin")
+                {
+                    <span class="logo-lg" style="font-size:16px"><small><b>Welcome, Admin!</b></small></span>
+                }
+                else
+                {
+                    <span class="logo-lg" style="font-size:16px"><small><b>Welcome, User!</b></small></span>
+                }
+
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                            <a href="javascript:void(0);" onclick="location.href='/Project/'" title="Trang chủ">
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="dropdown messages-menu">
+                            <a id="contact" href="javascript:void(0);" onclick="scrollToBottom();" title="Liên hệ">
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/Content/adminlte/dist/img/group_key.png" class="user-image" alt="">
+                                <span class="hidden-xs">#@Session["Login"]</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header" style="margin:0px;">
+                                    <img style="background-color:whitesmoke;" src="~/Content/adminlte/dist/img/customers_icon_01.PNG" class="img-circle" alt="">
+                                    <p style="color: white; font-family:Times New Roman, Tahoma, Helvetica Neue,Helvetica,Arial,sans-serif; " title="@ViewBag._fullname">
+                                        @ViewBag._fullname
+                                    </p>
+                                </li>
+                                <li class="user-body" style="background-color: #e9f5fa; margin:0px;">
+                                    <p style=" margin:0px;" title="@ViewBag._address">
+                                        @ViewBag._address
+                                    </p>
+                                </li>
+                                <li class="user-footer" style="background-color: #a1ceef; text-align: justify; margin:1px;">
+                                    <div class="pull-left">
+                                        <a id="btnUserChangePass" href="javascript:void(0);" onclick="location.href='/Home/ChangePass/'" class="btn btn-info">Change password</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a id="btnUserLogout" href="javascript:void(0);" onclick="location.href='/Home/Logout/'" class="btn btn-warning">Log out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    }
+    <a href="javascript:void(0);" onclick="topFunction();" id="toTop" class="ts-scrollToTop" title="Lên đầu trang" style=""><span class="fa fa-chevron-up"></span></a>
+</header>
+<script src="~/tra-cuu/Scripts/SiteHeader.js"></script>
+

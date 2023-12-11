@@ -1,0 +1,276 @@
+﻿@{
+    ViewBag.Title = "Quản lý dự án";
+    Layout = "~/Views/Shared/_Site.cshtml";
+    @model WEB_QLDUAN.Models.Project
+}
+
+@section Styles{
+
+
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/adminlte/components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/adminlte/dist/css/AdminLTE.css">
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+        .myborderError {
+            border: solid 1px red !important;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome */
+            color: green;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-webkit-input-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        :-ms-input-placeholder { /* IE 10+ */
+            color: red;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-ms-input-placeholder {
+            opacity: 0.5;
+            font-size: 9px;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: #ccc;
+            opacity: 0.3;
+            transition: opacity 250ms ease-in-out;
+            font-size: 12px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        :focus::-moz-placeholder {
+            opacity: 0.5;
+        }
+
+        :-moz-placeholder { /* Firefox 4 - 18 */
+            color: red;
+            opacity: 1;
+            transition: opacity 250ms ease-in-out;
+        }
+
+        :focus:-moz-placeholder {
+            opacity: 0.5;
+            font-size: 10px;
+        }
+
+        .modalLoading {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 82%;
+            top: 0;
+            /*background-color: Black;
+                    filter: alpha(opacity=30);
+                    opacity: 0.2;*/
+            -moz-opacity: 0.8;
+        }
+
+        .centerLoading {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 8px;
+            width: 60px;
+            background-color: #d3cccc;
+            border-radius: 5px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+            text-align: center;
+            color: orangered;
+            opacity: 0.8;
+        }
+
+            .centerLoading img {
+                text-align: center;
+            }
+
+        .nav-list li.active > a:after {
+            border-right-color: #000000;
+        }
+
+        .breadcrumb > li + li:before {
+            display: none;
+        }
+
+        .btn-cauhoi {
+            background-color: #c2fbd7;
+            border-radius: 100px;
+            box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+            color: green;
+            cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 250ms;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .btn-cauhoi:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+
+        .table-header {
+            background-color: #438eb9 !important;
+        }
+
+        #btn-scroll-up {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: transparent !important;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+            #btn-scroll-up :hover {
+                background-color: #555;
+            }
+
+        #dtCauHoiThemMoi_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiThemMoi_wrapper .row:last-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:first-child {
+            display: none;
+        }
+
+        #dtCauHoiCapNhat_wrapper .row:last-child {
+            display: none;
+        }
+
+        .validation-summary-errors {
+            font-size: 14px;
+            /*margin-top: 15px;*/
+            color: red;
+        }
+
+        .glyphicon.fast-right-spinner {
+            -webkit-animation: glyphicon-spin-r 1s infinite linear;
+            animation: glyphicon-spin-r 1s infinite linear;
+        }
+
+        .sidebar::before {
+            background: #585858 !important;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #576373;
+            border-color: #c5d0dc;
+            border-top: 2px solid #4c8fbd;
+            border-bottom-color: transparent;
+            background-color: #FFF;
+            z-index: 12;
+            line-height: 16px;
+            margin-top: -1px;
+            box-shadow: 0 -2px 3px 0 rgba(0,0,0,0.15);
+        }
+
+        .green {
+            color: #69aa46 !important;
+        }
+
+        .table-header {
+            background-color: #307ecc;
+            color: #FFF;
+            font-size: 14px;
+            line-height: 38px;
+            padding-left: 12px;
+            margin-bottom: 5px;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            float: none;
+        }
+
+        .dataTables_length > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_filter > label {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .dataTables_info {
+            font-size: 13px;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="">
+    <section class="content-header">
+        <h3 class="" style="color: #dd4b39; margin-top:5px; margin-bottom:3px;">
+            Daskboard
+            <small>#@Session["Login"]</small>
+            <i id="TongHop_Loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:18px; display:none;"></i>
+            <span id="isMobile"></span>
+        </h3>
+        <ol class="breadcrumb">
+            <li>
+                <a href="javascript:void(0);" onclick="location.href='/Home/Index/'">
+                    <i class=" fa fa-dashboard"></i> Home >
+                </a>
+            </li>
+            <li class="active">Daskboard</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+    </section>
+</div>
+
+
+@Scripts.Render("~/bundles/jqueryval");
+@section Scripts{
+    <script src="~/Content/adminlte/components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="~/Content/adminlte/components/chart.js/Chart.js"></script>
+
+    <script src="~/Content/adminlte/components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/adminlte/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/adminlte/components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/tra-cuu/Scripts/Customer.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+}

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<WEB_QLDUAN.Models.ToDo>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box" style="border-top-width:2px;">
+                <div class="box-header with-border">
+                    <i class="fa fa-list" style="color:darkorange; font-size:16px;"></i>
+                    <h3 class="box-title" style="color:darkorange; font-family:Tahoma; font-size:16px;">
+                        ToDo
+                        <a id="btnOpenToDo" style="cursor:pointer; color:orangered; font-weight:bold;margin-left:5px" data-toggle="modal" data-target="#myModal5"><i class="glyphicon glyphicon-plus" title="Thêm mới"></i></a>
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive" id="workloglist">
+                        <div class="table-responsive">
+                            <table id="tblWorklog" class="table table-bordered table-striped" style="">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:30px;">No.</th>
+                                        <th class="col-md-2">Date</th>
+                                        <th class="col-md-4">Title</th>
+                                        <th class="col-md-2">Work Hours</th>
+                                        <th class="col-md-2">User create</th>
+                                        <th class="col-md-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        var stt = 0;
+                                        foreach (var p in Model)
+                                        {
+                                            stt += 1;
+                                            if (Session["Login"] != null && p.UserID != null && Session["Login"].ToString().Trim().ToUpper() == p.UserID.Trim().ToUpper())
+                                            {
+                                                <tr style="background-color:#9acd9a;">
+
+                                                    <td style="max-width:45px;">@stt</td>
+                                                    @if (p.Date != null && p.Date.HasValue)
+                                                    {
+                                                        <td>@p.Date.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+
+                                                    <td>@p.Title</td>
+
+                                                    @if (p.HourWork != null && p.HourWork.HasValue)
+                                                    {
+                                                        <td>@p.HourWork.Value.ToString("n0")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@p.UserID</td>
+                                                    <td><button style="margin-right:5px; color:darkorange; border-color:orange;" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateToDo('@p.ID');" data-target="#myModal6" title="Sửa"><i class="glyphicon glyphicon-edit"></i></button><button style="color:darkred; border-color:red" title="Xóa" onclick="fnDeleteToDo('@p.ID');"><i class="glyphicon glyphicon-remove"></i></button></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td style="max-width:45px;">@stt</td>
+                                                    @if (p.Date != null && p.Date.HasValue)
+                                                    {
+                                                        <td>@p.Date.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+
+                                                    <td>@p.Title</td>
+
+                                                    @if (p.HourWork != null && p.HourWork.HasValue)
+                                                    {
+                                                        <td>@p.HourWork.Value.ToString("n0")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@p.UserID</td>
+                                                    @*<td><button style="margin-right:5px; color:darkorange; border-color:orange;" data-toggle="modal" data-id="@p.ID" onclick="fnUpdateToDo('@p.ID');" data-target="#myModal6" title="Sửa"><i class="glyphicon glyphicon-edit"></i></button><button style="color:darkred; border-color:red" title="Xóa" onclick="fnDeleteToDo('@p.ID');"><i class="glyphicon glyphicon-remove"></i></button></td>*@
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    $('#tblWorklog').DataTable();
+
+    $('#btnOpenToDo').off('click').on('click', function () {
+        var taskid = $('#txtTitleTaskID').html();
+
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var day = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var today = now.getFullYear() + '-' + month + '-' + day;
+
+        if (taskid != null)
+            $('#lstTask_todo_themmoi').val(taskid).trigger('change');
+        else $('#lstTask_todo_themmoi').val('').trigger('change');
+
+        $('#txtDate_todo_themmoi').val(today);
+
+    });
+</script>
